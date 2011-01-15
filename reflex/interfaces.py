@@ -69,7 +69,12 @@ class Ruleset:
     
     def run(self, binding, data, rules, *args):
         """Attempt to execute a given event binding."""
+        if len(rules) < len(binding.options):
+            return None
+        last_rule = len(rules)
         for i, option in enumerate(binding.options):
+            if last_rule < i:
+                return None
             if option is None:
                 continue
             rule = rules[i]
