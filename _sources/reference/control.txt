@@ -1,0 +1,16 @@
+control module
+==============================================
+
+
+.. toctree::
+    :hidden:
+    
+    interfaces <interfaces>
+
+EventManager
+------------
+.. _eventmanager:
+
+.. autoclass:: reflex.control.EventManager
+    :members:
+

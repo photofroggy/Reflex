@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>interfaces module &mdash; Reflex v1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Reflex v1 documentation" href="../index.html" />
+    <link rel="next" title="Reflex Tutorials" href="../help/tutorials/index.html" />
+    <link rel="prev" title="data module" href="data.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data.html" title="data module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="interfaces-module">
+<h1>interfaces module<a class="headerlink" href="#interfaces-module" title="Permalink to this headline">¶</a></h1>
+<p>The interfaces module contains classes providing different interfaces for different components of the event system.</p>
+<div class="section" id="ruleset">
+<h2>Ruleset<a class="headerlink" href="#ruleset" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reflex.interfaces.Ruleset">
+<em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">Ruleset</tt><big>(</big><em>args</em>, <em>mapref</em>, <em>output</em>, <em>debug</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default Ruleset.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>args</em> - Any arguments passed to the
+<a class="reference internal" href="control.html#id1"><em>event manager</em></a> object when the instance
+is created.</li>
+<li><strong>mapref</strong> - A reference to the dictionary storing all of the
+event bindings stored in the system.</li>
+<li><strong>output</strong> - A reference to the method being used to write
+output to the screen. This is given by the <a class="reference internal" href="control.html#id1"><em>event manager</em></a> object.</li>
+<li><strong>debug</strong> - Boolean defining whether or not the application is
+running in debug mode. This may be useful for some
+applications.</li>
+</ul>
+<p>The Ruleset object provides an interface for managing bindings
+and events on a per-event basis. One Ruleset is assigned to <em>one</em>
+type of event only.</p>
+<p>An instance of this class is used for all events that do not have
+a specific ruleset assigned to them.</p>
+<dl class="method">
+<dt id="reflex.interfaces.Ruleset.bind">
+<tt class="descname">bind</tt><big>(</big><em>source</em>, <em>meth</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an event binding.</p>
+<p>This is the method called by the <a class="reference internal" href="control.html#id1"><em>event manager</em></a> object&#8217;s own <tt class="docutils literal"><span class="pre">bind()</span></tt> method. It ensures
+that there are no clashes between the given binding details
+and any existing event bindings.</p>
+<p>If there is a clash, then the method returns <tt class="xref docutils literal"><span class="pre">None</span></tt>,
+otherwise an instance of the <a class="reference internal" href="data.html#data-binding"><em>Binding</em></a>
+class is returned. The instance is also added to the object
+referenced by <tt class="docutils literal"><span class="pre">self.mapref</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Ruleset.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>init method.</p>
+<p>This method is called by the <tt class="docutils literal"><span class="pre">__init__()</span></tt> method.
+Subclasses should overwrite this method if they need to do
+anything on initialisation.</p>
+<p>This is a do-nothing method by default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Ruleset.run">
+<tt class="descname">run</tt><big>(</big><em>binding</em>, <em>data</em>, <em>rules</em>, <em>*args</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a given event binding.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><strong>binding</strong> - An instance of the <a class="reference internal" href="data.html#data-binding"><em>Binding</em></a> class.</li>
+<li><strong>data</strong> - An instance of the <a class="reference internal" href="data.html#data-event"><em>Event</em></a>
+class. This represents the event being triggered.</li>
+<li><strong>rules</strong> - This is a list of the items related to the
+event. Typically, these items are compared to the
+<a class="reference internal" href="data.html#data-binding"><em>binding&#8217;s</em></a> own <tt class="docutils literal"><span class="pre">options</span></tt> list.
+Custom Rulesets may use both lists in their own way, if
+appropriate.</li>
+<li><em>args</em> - Additional arguments given to the <a class="reference internal" href="control.html#id1"><em>event
+manager&#8217;s</em></a> <tt class="docutils literal"><span class="pre">trigger()</span></tt> method.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Ruleset.set_map">
+<tt class="descname">set_map</tt><big>(</big><em>mapref</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.set_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the reference for the event map.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><strong>mapref</strong> - As in the <tt class="docutils literal"><span class="pre">__init__()</span></tt> method, this
+parameter is a reference to the dictionary storing all of
+the event bindings being stored in the event system.</li>
+</ul>
+<p>This method should only ever be called by the
+<a class="reference internal" href="control.html#id1"><em>event manager</em></a> object&#8217;s
+<tt class="docutils literal"><span class="pre">clear_bindings()</span></tt> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Ruleset.unbind">
+<tt class="descname">unbind</tt><big>(</big><em>source</em>, <em>meth</em>, <em>event</em>, <em>options=None</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an event binding.</p>
+<p>Similar to the <tt class="docutils literal"><span class="pre">bind()</span></tt> method of this class, except the
+binding is removed rather than added. This method <tt class="xref docutils literal"><span class="pre">True</span></tt>
+if a matching event binding was found and removed, <tt class="xref docutils literal"><span class="pre">False</span></tt>
+if no bindings were removed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reactor">
+<h2>reactor<a class="headerlink" href="#reactor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reflex.interfaces.reactor">
+<em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">reactor</tt><big>(</big><em>manager</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactor base class.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><strong>manager</strong> - This is a reference to an instance of a
+<a class="reference internal" href="control.html#id1"><em>reflex.control.EventManager</em></a> object.
+This is used here to provide the base reactor class with the <tt class="docutils literal"><span class="pre">bind()</span></tt>,
+<tt class="docutils literal"><span class="pre">unbind()</span></tt>, <tt class="docutils literal"><span class="pre">handler()</span></tt> and <tt class="docutils literal"><span class="pre">trigger</span></tt> methods. For
+more information about these methods, see the
+documentation for the <tt class="docutils literal"><span class="pre">reflex.control.EventManager</span></tt>
+class.</li>
+<li><em>args</em> and <em>kwargs</em> - Any additional parameters given here
+are passed to the <tt class="docutils literal"><span class="pre">init()</span></tt> method.</li>
+</ul>
+<p>In the reflex system, a <em>reactor</em> is an object containing several
+methods which react to <em>events</em>, based on certain parameters.
+The methods that react to events are usually referred to as
+<em>&#8216;event handlers&#8217;</em>.</p>
+<p>To define a method as an <em>event handler</em>, the method must be
+<em>bound</em> to an event using the <tt class="docutils literal"><span class="pre">bind()</span></tt> method. This creates an
+<em>event binding</em>. An <em>event binding</em> is an object (instance of
+<tt class="docutils literal"><span class="pre">reflex.data.Binding</span></tt>) that holds information about the
+relationship between a method and an event.</p>
+<p>Developers adapting Reflex for their own applications are
+advised to use the <tt class="docutils literal"><span class="pre">reactor</span></tt> class as a base for any base
+classes they might want to create.</p>
+<p>To get an idea of how to properly create and use reactors, refer
+to the tutorials.</p>
+<dl class="method">
+<dt id="reflex.interfaces.reactor.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactor configuration.</p>
+<p>This is a do-nothing method. Subclasses should extend this
+method and use it to create <em>event bindings</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">interfaces module</a><ul>
+<li><a class="reference internal" href="#ruleset">Ruleset</a></li>
+<li><a class="reference internal" href="#reactor">reactor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="data.html"
+                        title="previous chapter">data module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../help/tutorials/index.html"
+                        title="next chapter">Reflex Tutorials</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/interfaces.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="data.html" title="data module"
+             >previous</a> |</li>
+        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, photofroggy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.6.
+    </div>
+  </body>
+</html>

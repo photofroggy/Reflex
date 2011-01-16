@@ -1,0 +1,24 @@
+data module
+=============================================
+
+.. toctree::
+    :hidden:
+
+    interfaces <reference/interfaces>
+
+This module contains objects representing data used in the event system.
+
+Event
+-----
+.. _data-event:
+
+.. autoclass:: reflex.data.Event
+    :members:
+
+Binding
+-------
+.. _data-binding:
+
+.. autoclass:: reflex.data.Binding
+    :members:
+
