@@ -23,6 +23,7 @@ from reflex.data import Binding
 from reflex.interfaces import Ruleset
 
 def writeout(message=''):
+    """ ignore this foo """
     sys.stdout.write('{0}\n'.format(message))
 
 class EventManager:
@@ -45,21 +46,21 @@ class EventManager:
             
             events.bind('main app', example, 'test')
             
-            events.trigger(Event('test')
+            events.trigger(Event('test'))
         
         The above example does not show the full power of the system. View
         the tutorials to get a better idea of how things can be used.
     """
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, output=writeout, debug=False, *args, **kwargs):
         self._write = writeout
-        self.debug = False
+        self.debug = debug
         self.map = {}
         self.rules = {}
-        self.init(*args, **kwargs)
-        self.load_rules(*args, **kwargs)
+        self.init(*args)
+        self.load_rules(*args)
     
-    def init(self, *args, **kwargs):
+    def init(self, *args):
         """ This method is called by ``__init__``.
             
             On its own, it doesn't do anything. This is designed as a
@@ -70,7 +71,7 @@ class EventManager:
         """
         pass
     
-    def load_rules(self, *args, **kwargs):
+    def load_rules(self, *args):
         """ Load any rulesets that are present in reflex.rules.
             
             The method loads and stores any rulesets that are found. By
@@ -119,12 +120,12 @@ class EventManager:
             created. The event binding is an instance of the
             ``refelx.data.Binding`` class.
         """
-        if not isinstance(meth, Callable):
+        if not isinstance(method, Callable):
             return None
         key = 'default' if not event in self.rules.keys() else event
         return self.rules[key].bind(source, method, event, options, *additional)
     
-    def unbind(self, source, meth, event, options=None):
+    def unbind(self, source, method, event, options=None):
         """ Remove an event binding for a method.
             
             This is the reverse of the bind method. Once again, the
@@ -132,7 +133,7 @@ class EventManager:
             for the event.
         """
         key = 'default' if not event in self.rules.keys() else event
-        return self.rules[key].unbind(source, meth, event, options)
+        return self.rules[key].unbind(source, method, event, options)
     
     def handler(self, event, options=None, *additional):
         """ Create an event handler.
