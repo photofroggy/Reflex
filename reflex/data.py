@@ -11,6 +11,7 @@ class Binding:
     
     source = None
     call = None
+    event = None
     options = []
     additional = []
     type = None
@@ -19,6 +20,7 @@ class Binding:
         """All the given values are stored on instantiation of an event binding."""
         self.source = source
         self.call = method
+        self.event = event
         self.options = options
         self.additional = additional
         self.type = '<event[\''+event+'\'].binding>'

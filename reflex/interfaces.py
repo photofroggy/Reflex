@@ -10,8 +10,8 @@
 # Standard Lib imports.
 import os
 import sys
-import inspect
 from functools import wraps
+from collections import Callable
 # Custom
 from reflex.data import Binding
 
@@ -22,15 +22,27 @@ class reactor:
     
     def __init__(self, manager, *args, **kwargs):
         """ Initialise the reactor! Do not overwrite this method, use
-            __inst__ instead!
+            init instead!
         """
         self.bind, self.unbind = manager.bindset(self.name)
         self.trigger = manager.trigger
-        self.__inst__(*args, **kwargs)
+        
+        def handler(event, options=None, *additional):
+            def decorate(func):
+                if not isinstance(func, Callable):
+                    return func
+                func.binding = self.bind(func, event, options, *additional)
+                return func
+            return decorate
+        
+        self.handler = handler
+        
+        self.init(*args, **kwargs)
     
-    def __inst__(self, *args, **kwargs):
+    def init(self, *args, **kwargs):
         pass
-    
+
+
 class Ruleset:
 
     def __init__(self, args, mapref, output, dbug):
@@ -42,6 +54,9 @@ class Ruleset:
     def __inst__(self, *args):
         """Overwrite this method, not __init__!"""
         pass
+    
+    def set_map(self, mapref):
+        self.mapref = mapref
 
     def bind(self, source, meth, event, options=None, *additional):
         """Extensions can create event bindings. When they do, the information comes through here."""
@@ -68,27 +83,32 @@ class Ruleset:
                 del self.mapref[event]
     
     def run(self, binding, data, rules, *args):
-        """Attempt to execute a given event binding."""
+        """ Attempt to execute a given event binding. """
         if len(rules) < len(binding.options):
             return None
-        last_rule = len(rules)
+        last_item = len(rules)
         for i, option in enumerate(binding.options):
-            if last_rule < i:
-                return None
+            # Ignore None
             if option is None:
                 continue
+            # Process event item i
             rule = rules[i]
             if isinstance(option, str):
-                if str(rule).lower() == option.lower():
-                    continue
-            if type(rule) != type(option): return None
-            if rule == option: continue
+                try:
+                    if str(rule).lower() == option.lower():
+                        continue
+                except Exception:
+                    return None
+            if type(rule) != type(option):
+                return None
+            if rule == option:
+                continue
             return None
         try:
-            binding.call(data, *args)
+            return binding.call(data, *args)
         except Exception as e:
             log = self._write
-            log('>> Source "{0}" failed to handle event "{1}"!'.format(binding.source, data.name))
+            log('>> Source "{0}" failed to handle event "{1}"!'.format(binding.source, binding.event))
             log('>> Error message: {0}.'.format(e.args[0]))
         return None
 
