@@ -3,13 +3,13 @@
 
 The interfaces module contains classes providing different interfaces for different components of the event system.
 
-3.1. ``Ruleset``
-----------------
+3.1. ``Ruleset`` - Binding management
+--------------------------------------
 .. autoclass:: reflex.interfaces.Ruleset
     :members:
 
-3.2. ``reactor``
------------------
+3.2. ``reactor`` - Base for reactive classes
+---------------------------------------------
 .. autoclass:: reflex.interfaces.reactor
     :members:
 

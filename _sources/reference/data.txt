@@ -3,15 +3,15 @@
 
 This module contains objects representing data used in the event system.
 
-2.1 ``Event``
---------------
+2.1 ``Event`` - Event data representation
+------------------------------------------
 .. _data-event:
 
 .. autoclass:: reflex.data.Event
     :members:
 
-2.2 ``Binding``
----------------
+2.2 ``Binding`` - Event binding representation.
+-----------------------------------------------
 .. _data-binding:
 
 .. autoclass:: reflex.data.Binding
