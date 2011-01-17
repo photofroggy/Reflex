@@ -18,6 +18,7 @@ You can download the latest repository commits in zip or tarball form below:
 
 * `Latest Zip <https://github.com/photofroggy/Reflex/zipball/master>`_
 * `Latest Tarball <https://github.com/photofroggy/Reflex/tarball/master>`_
+* `GitHub Repository <https://github.com/photofroggy/Reflex/tree/master>`_
 
 Or you can grab the repository directly in the terminal using git as below::
 
