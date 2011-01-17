@@ -1,0 +1,12 @@
+Package Reference
+=================
+
+**Package documentation and API reference:**
+
+.. toctree::
+    :maxdepth: 2
+
+    control <control>
+    data <data>
+    interfaces <interfaces>
+    
