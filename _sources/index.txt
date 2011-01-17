@@ -5,14 +5,23 @@
 
 Reflex - An Event System
 ==================================
-Reflex is a Python pack created by photofroggy. The package provides an event system to application developers, allowing developers to create applications where events can be handled by methods, based on certain parameters.
+**Reflex** is a Python package created by `photofroggy <http://photofroggy.deviantart.com>`_.
+
+The package provides an event system to application developers, allowing developers to create applications where events can be handled by methods, based on certain parameters.
 
 By extension, the package allows developers to create applications with event-based extension systems, allowing customisation of how the application works. The system provided is quite powerful, yet can be used for simple applications. It is generally recommended to use this when a complicated system may be required.
 
 Downloads
 ---------
 
-Stuff about downloads here.
+You can download the latest repository commits in zip or tarball form below:
+
+* `Latest Zip <https://github.com/photofroggy/Reflex/zipball/master>`_
+* `Latest Tarball <https://github.com/photofroggy/Reflex/tarball/master>`_
+
+Or you can grab the repository directly in the terminal using git as below::
+
+    git clone git@github.com:photofroggy/Reflex.git
 
 Package Reference
 -----------------
