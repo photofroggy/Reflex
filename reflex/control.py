@@ -23,7 +23,6 @@ from reflex.data import Binding
 from reflex.interfaces import Ruleset
 
 def writeout(message=''):
-    """ ignore this foo """
     sys.stdout.write('{0}\n'.format(message))
 
 class EventManager:
@@ -51,6 +50,13 @@ class EventManager:
         The above example does not show the full power of the system. View
         the tutorials to get a better idea of how things can be used.
     """
+    
+    class info:
+        version = 1
+        build = 1
+        stamp = 000000000
+        name = 'Instinct'
+        state = 'Alpha'
     
     def __init__(self, output=writeout, debug=False, *args, **kwargs):
         self._write = writeout
