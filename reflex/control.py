@@ -196,6 +196,8 @@ class EventManager:
         if not event in self.map.keys():
             return []
         key = 'default' if not event in self.rules.keys() else event
+        if hasattr(self.rules[key], 'trigger'):
+            return self.rules[key].trigger(data, rules, *args)
         return [self.rules[key].run(binding, data, rules, *args) for binding in self.map[event]]
     
     def clear_bindings(self):
