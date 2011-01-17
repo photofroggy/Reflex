@@ -9,15 +9,15 @@ Reflex is a Python pack created by photofroggy. The package provides an event sy
 
 By extension, the package allows developers to create applications with event-based extension systems, allowing customisation of how the application works. The system provided is quite powerful, yet can be used for simple applications. It is generally recommended to use this when a complicated system may be required.
 
+Downloads
+---------
+
+Stuff about downloads here.
+
 Package Reference
 -----------------
 
-.. toctree::
-    :maxdepth: 2
-
-    control <reference/control>
-    data <reference/data>
-    interfaces <reference/interfaces>
+Go :doc:`here <reference/index>` for documentation on the package.
 
 Help Files
 ----------
@@ -38,3 +38,7 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. toctree::
+    :hidden:
+    
+    reference/index

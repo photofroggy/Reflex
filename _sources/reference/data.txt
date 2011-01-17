@@ -1,11 +1,6 @@
 data module
 =============================================
 
-.. toctree::
-    :hidden:
-
-    interfaces <reference/interfaces>
-
 This module contains objects representing data used in the event system.
 
 Event
