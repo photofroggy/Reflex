@@ -1,8 +1,8 @@
-control module
+1. ``control`` module
 ==============================================
 
-EventManager
-------------
+1.1 ``EventManager`` - Basic event management
+---------------------------------------------
 .. _eventmanager:
 
 .. autoclass:: reflex.control.EventManager

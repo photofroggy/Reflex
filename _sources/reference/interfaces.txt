@@ -1,15 +1,15 @@
-interfaces module
+3. ``interfaces`` module
 =============================================
 
 The interfaces module contains classes providing different interfaces for different components of the event system.
 
-Ruleset
--------
+3.1. ``Ruleset``
+----------------
 .. autoclass:: reflex.interfaces.Ruleset
     :members:
 
-reactor
--------
+3.2. ``reactor``
+-----------------
 .. autoclass:: reflex.interfaces.reactor
     :members:
 

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>interfaces module &mdash; Reflex v1 documentation</title>
+    <title>3. interfaces module &mdash; Reflex v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Reflex v1 documentation" href="../index.html" />
-    <link rel="next" title="Reflex Tutorials" href="../help/tutorials/index.html" />
-    <link rel="prev" title="data module" href="data.html" /> 
+    <link rel="up" title="Package Reference" href="index.html" />
+    <link rel="prev" title="2. data module" href="data.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,12 +34,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="data.html" title="data module"
+          <a href="data.html" title="2. data module"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Package Reference</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,10 +47,10 @@
           <div class="body">
             
   <div class="section" id="interfaces-module">
-<h1>interfaces module<a class="headerlink" href="#interfaces-module" title="Permalink to this headline">¶</a></h1>
+<h1>3. <tt class="docutils literal"><span class="pre">interfaces</span></tt> module<a class="headerlink" href="#interfaces-module" title="Permalink to this headline">¶</a></h1>
 <p>The interfaces module contains classes providing different interfaces for different components of the event system.</p>
 <div class="section" id="ruleset">
-<h2>Ruleset<a class="headerlink" href="#ruleset" title="Permalink to this headline">¶</a></h2>
+<h2>3.1. <tt class="docutils literal"><span class="pre">Ruleset</span></tt><a class="headerlink" href="#ruleset" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="reflex.interfaces.Ruleset">
 <em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">Ruleset</tt><big>(</big><em>args</em>, <em>mapref</em>, <em>output</em>, <em>debug</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset" title="Permalink to this definition">¶</a></dt>
@@ -60,12 +58,12 @@
 <p>Input parameters:</p>
 <ul class="simple">
 <li><em>args</em> - Any arguments passed to the
-<a class="reference internal" href="control.html#id1"><em>event manager</em></a> object when the instance
+<a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object when the instance
 is created.</li>
 <li><strong>mapref</strong> - A reference to the dictionary storing all of the
 event bindings stored in the system.</li>
 <li><strong>output</strong> - A reference to the method being used to write
-output to the screen. This is given by the <a class="reference internal" href="control.html#id1"><em>event manager</em></a> object.</li>
+output to the screen. This is given by the <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object.</li>
 <li><strong>debug</strong> - Boolean defining whether or not the application is
 running in debug mode. This may be useful for some
 applications.</li>
@@ -79,7 +77,7 @@ a specific ruleset assigned to them.</p>
 <dt id="reflex.interfaces.Ruleset.bind">
 <tt class="descname">bind</tt><big>(</big><em>source</em>, <em>meth</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset.bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an event binding.</p>
-<p>This is the method called by the <a class="reference internal" href="control.html#id1"><em>event manager</em></a> object&#8217;s own <tt class="docutils literal"><span class="pre">bind()</span></tt> method. It ensures
+<p>This is the method called by the <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object&#8217;s own <tt class="docutils literal"><span class="pre">bind()</span></tt> method. It ensures
 that there are no clashes between the given binding details
 and any existing event bindings.</p>
 <p>If there is a clash, then the method returns <tt class="xref docutils literal"><span class="pre">None</span></tt>,
@@ -112,7 +110,7 @@ event. Typically, these items are compared to the
 <a class="reference internal" href="data.html#data-binding"><em>binding&#8217;s</em></a> own <tt class="docutils literal"><span class="pre">options</span></tt> list.
 Custom Rulesets may use both lists in their own way, if
 appropriate.</li>
-<li><em>args</em> - Additional arguments given to the <a class="reference internal" href="control.html#id1"><em>event
+<li><em>args</em> - Additional arguments given to the <a class="reference internal" href="control.html#eventmanager"><em>event
 manager&#8217;s</em></a> <tt class="docutils literal"><span class="pre">trigger()</span></tt> method.</li>
 </ul>
 </dd></dl>
@@ -128,7 +126,7 @@ parameter is a reference to the dictionary storing all of
 the event bindings being stored in the event system.</li>
 </ul>
 <p>This method should only ever be called by the
-<a class="reference internal" href="control.html#id1"><em>event manager</em></a> object&#8217;s
+<a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object&#8217;s
 <tt class="docutils literal"><span class="pre">clear_bindings()</span></tt> method.</p>
 </dd></dl>
 
@@ -146,7 +144,7 @@ if no bindings were removed.</p>
 
 </div>
 <div class="section" id="reactor">
-<h2>reactor<a class="headerlink" href="#reactor" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. <tt class="docutils literal"><span class="pre">reactor</span></tt><a class="headerlink" href="#reactor" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="reflex.interfaces.reactor">
 <em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">reactor</tt><big>(</big><em>manager</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor" title="Permalink to this definition">¶</a></dt>
@@ -154,7 +152,7 @@ if no bindings were removed.</p>
 <p>Input parameters:</p>
 <ul class="simple">
 <li><strong>manager</strong> - This is a reference to an instance of a
-<a class="reference internal" href="control.html#id1"><em>reflex.control.EventManager</em></a> object.
+<a class="reference internal" href="control.html#eventmanager"><em>reflex.control.EventManager</em></a> object.
 This is used here to provide the base reactor class with the <tt class="docutils literal"><span class="pre">bind()</span></tt>,
 <tt class="docutils literal"><span class="pre">unbind()</span></tt>, <tt class="docutils literal"><span class="pre">handler()</span></tt> and <tt class="docutils literal"><span class="pre">trigger</span></tt> methods. For
 more information about these methods, see the
@@ -198,19 +196,16 @@ method and use it to create <em>event bindings</em>.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">interfaces module</a><ul>
-<li><a class="reference internal" href="#ruleset">Ruleset</a></li>
-<li><a class="reference internal" href="#reactor">reactor</a></li>
+<li><a class="reference internal" href="#">3. <tt class="docutils literal"><span class="pre">interfaces</span></tt> module</a><ul>
+<li><a class="reference internal" href="#ruleset">3.1. <tt class="docutils literal"><span class="pre">Ruleset</span></tt></a></li>
+<li><a class="reference internal" href="#reactor">3.2. <tt class="docutils literal"><span class="pre">reactor</span></tt></a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="data.html"
-                        title="previous chapter">data module</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="../help/tutorials/index.html"
-                        title="next chapter">Reflex Tutorials</a></p>
+                        title="previous chapter">2. <tt class="docutils literal docutils literal docutils literal"><span class="pre">data</span></tt> module</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/reference/interfaces.txt"
@@ -240,12 +235,10 @@ method and use it to create <em>event bindings</em>.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="data.html" title="data module"
+          <a href="data.html" title="2. data module"
              >previous</a> |</li>
-        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">Reflex v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Package Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

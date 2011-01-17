@@ -1,12 +1,21 @@
 Package Reference
 =================
 
+:Release: |version|
+:Date: |today|
+
+This library reference manual desribes the classes and modules within
+the ``reflex`` package. The package contains classes which can be used
+as a full event system by applications, allowing developers to create
+more flexible applications, and even applications that can be extended
+by other developers.
+
 **Package documentation and API reference:**
 
 .. toctree::
     :maxdepth: 2
 
-    control <control>
-    data <data>
-    interfaces <interfaces>
+    control
+    data
+    interfaces
     
