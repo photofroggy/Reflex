@@ -14,8 +14,12 @@ By extension, the package allows developers to create applications with event-ba
 Downloads
 ---------
 
-You can download the latest bleeding edge commits in zip or tarball form, or
-visit the repository below:
+**Get stable releases of Reflex here:**
+
+* Insert download link for a build.
+* Insert link to a page for all releases.
+
+**Get the bleeding edge builds of Reflex here:**
 
 * `Latest Zip <https://github.com/photofroggy/Reflex/zipball/master>`_
 * `Latest Tarball <https://github.com/photofroggy/Reflex/tarball/master>`_
