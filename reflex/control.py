@@ -54,7 +54,7 @@ class EventManager:
     class info:
         version = 1
         build = 1
-        stamp = 19012011-004944
+        stamp = '19012011-004944'
         name = 'Instinct'
         state = 'Alpha'
     
