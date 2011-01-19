@@ -16,8 +16,8 @@ Downloads
 
 **Get stable releases of Reflex here:**
 
-* Insert download link for a build.
-* Insert link to a page for all releases.
+* `Reflex 1 Alpha - Build 1 <http://download.botdom.com/bwgbj/>`_
+* :doc:`more... <reflex_downloads>`
 
 **Get the bleeding edge builds of Reflex here:**
 
@@ -54,6 +54,7 @@ Indices and tables
 * :ref:`search`
 
 .. toctree::
-    :hidden:
-    
-    reference/index
+   :hidden:
+   
+   reference/index
+   reflex_downloads
