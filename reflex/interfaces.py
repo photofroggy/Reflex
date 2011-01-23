@@ -55,18 +55,9 @@ class reactor:
         """ This method stores references to utility methods from the
             *event manager*.
         """
-        self.bind, self.unbind = manager.bindset(self.name)
+        self._bind = manager.bind
+        self._unbind = manager.unbind
         self.trigger = manager.trigger
-        
-        def handler(event, options=None, *additional):
-            def decorate(func):
-                if not isinstance(func, Callable):
-                    return func
-                func.binding = self.bind(func, event, options, *additional)
-                return func
-            return decorate
-        
-        self.handler = handler
         
         self.init(*args, **kwargs)
     
@@ -77,6 +68,22 @@ class reactor:
             method and use it to create *event bindings*.
         """
         pass
+        
+    def bind(self, source, method, event, options=None, *additional):
+        # This is merely a wrapper.
+        return self._bind(self.name, method, event, options, *additional)
+    
+    def unbind(self, source, method, event, options=None):
+        # Another wrapper!
+        return self._unbind(self.name, method, event, options)
+        
+    def handler(self, event, options=None, *additional):
+        def decorate(func):
+            if not isinstance(func, Callable):
+                return func
+            func.binding = self.bind(func, event, options, *additional)
+            return func
+        return decorate
 
 
 class Ruleset:
