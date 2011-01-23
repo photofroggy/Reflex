@@ -54,7 +54,7 @@ class EventManager:
     class info:
         version = 1
         build = 2
-        stamp = '19012011-004944'
+        stamp = '23012011-185751'
         name = 'Cognition'
         state = 'Beta'
     
