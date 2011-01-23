@@ -7,7 +7,31 @@
 '''
 
 class Binding:
-    """Event binding. Each instance represents a different binding."""
+    """ Event binding.
+    
+        Each instance represents a different binding. A binding stores
+        information showing how a certain method is related to a certain
+        event. Different attributes define the conditions for the
+        relationship. The attributes are as follows:
+        
+        * *str* **source** - The source defines a name describing where
+          the binding came from, or what the method belongs to.
+        * *callable* **call** - The method used to handle the specified
+          event.
+        * *str* **event** - The name of the event that the method
+          defined in ``call`` is used to handle.
+        * *list* **optoins** - This list defines a set of items that,
+          when defined, must match the respective items provided when
+          the event defined by ``event`` is triggered. If the items do
+          not match, then the handler is not used. Different Rulesets
+          can modify this behaviour.
+        * *list* **additional** - Any additional information about the
+          binding.
+        * *str* **type** - A string representation of the binding.
+        
+        The constructor of this class takes the above fields as input,
+        apart from ``type``.
+    """
     
     source = None
     call = None
@@ -31,13 +55,28 @@ class Binding:
         pass
 
 class Event:
-    """Event class. The objects represent different events!"""
+    """ Event class.
+        
+        Instances of this class are used to represent events, and store
+        information specific to the event being represented. The
+        constructor takes the following input:
+        
+        * *str* **event** - The name of the event that the object
+          represents.
+        * *list* **data** - The data relating to the event being
+          represented by the object.
+        
+        The event name is stored under the attribute ``name``. The
+        ``data`` parameter should be a list of pairs, defining a key and
+        a value each. The object stores these ``(key, value)`` pairs as
+        ``obj.<key> = <value>``.
+    """
     
     def __init__(self, event, data=[]):
         self.name = event
         self.rules = []
         for key, value in data:
-            if key.lower() == 'rules':
+            if key.lower() in ['rules', 'name']:
                 continue
             setattr(self, key, value)
             self.rules.append(value)

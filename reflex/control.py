@@ -53,10 +53,10 @@ class EventManager:
     
     class info:
         version = 1
-        build = 1
+        build = 2
         stamp = '19012011-004944'
-        name = 'Instinct'
-        state = 'Alpha'
+        name = 'Cognition'
+        state = 'Beta'
     
     def __init__(self, output=writeout, debug=False, *args, **kwargs):
         self._write = writeout
@@ -102,18 +102,20 @@ class EventManager:
             
             Input parameters:
             
-            * **source** - The origin of the method given to handle the
-              event. This should be a name describing where the
-              method may have come from, so different things may be
+            * *str* **source** - The origin of the method given to
+              handle the event. This should be a name describing where
+              the method may have come from, so different things may be
               appropriate in different applications.
-            * **method** - This is a method that will be invoked when
-              the event defined in the event parameter is triggered.
-            * **event** - The event that the method is being bound to.
-            * **options** - An iterable of conditions the event must
-              meet. If given, then corresponding items provided
+            * *callable* **method** - This is a method that will be
+              invoked when the event defined in the event parameter is
+              triggered.
+            * *str* **event** - The event that the method is being bound
+              to.
+            * *list* **options** - An iterable of conditions the event
+              must meet. If given, then corresponding items provided
               when the event is triggered must match these items.
-            * **additional** - Any additional arguments which developers
-              may want to use in their systems.
+            * *list* **additional** - Any additional arguments which
+              developers may want to use in their systems.
             
             This is essentially the same concept as creating an event
             listener. The binding is actually done in the ruleset object
@@ -178,9 +180,9 @@ class EventManager:
             
             Input parameters:
             
-            * **data** - This parameter should be an event object, using
-              either the ``reflex.data.Event`` class or a subclass of
-              it.
+            * ``reflex.data.Event`` **data** - This parameter should be
+              an event object, using either the ``reflex.data.Event``
+              class or a subclass of it.
             * **args** - Any other additional arguments that developers
               want to pass to event handlers.
             
@@ -213,7 +215,7 @@ class EventManager:
             
             Input parameters:
             
-            * **source** - The binding source to be used when binding or
+            * *str* **source** - The binding source to be used when binding or
               unbinding events.
             
             This method is only meant for use in
@@ -221,6 +223,9 @@ class EventManager:
             containing both the ``bind()`` and ``unbind()`` methods,
             except that the methods have been wrapped to always use the
             same ``source`` parameter, as given to this method.
+            
+            **Note:** This method is currently not in use, so may be
+            removed.
         """
         def wrapit(func):
             @wraps(func)

@@ -8,7 +8,9 @@ The package, written for Python 3.1, provides a way for applications to manage e
 
 While the system is somewhat more complex than existing event systems, I feel it is more flexible, and more powerful.
 
-Here is the most basic example::
+Here is the most basic example:
+
+.. source-code:: python
 
     from reflex.data import Event
     from reflex.control import EventManager
