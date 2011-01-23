@@ -69,11 +69,11 @@ class reactor:
         """
         pass
         
-    def bind(self, source, method, event, options=None, *additional):
+    def bind(self, method, event, options=None, *additional):
         # This is merely a wrapper.
         return self._bind(self.name, method, event, options, *additional)
     
-    def unbind(self, source, method, event, options=None):
+    def unbind(self, method, event, options=None):
         # Another wrapper!
         return self._unbind(self.name, method, event, options)
         
