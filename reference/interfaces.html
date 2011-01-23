@@ -180,11 +180,29 @@ classes they might want to create.</p>
 <p>To get an idea of how to properly create and use reactors, refer
 to the tutorials.</p>
 <dl class="method">
+<dt id="reflex.interfaces.reactor.bind">
+<tt class="descname">bind</tt><big>(</big><em>method</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a wrapper for <tt class="docutils literal"><span class="pre">reflex.control.EventManager().bind</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.reactor.handler">
+<tt class="descname">handler</tt><big>(</big><em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor.handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can be used as a decorator to bind events.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="reflex.interfaces.reactor.init">
 <tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reactor configuration.</p>
 <p>This is a do-nothing method. Subclasses should extend this
 method and use it to create <em>event bindings</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.reactor.unbind">
+<tt class="descname">unbind</tt><big>(</big><em>method</em>, <em>event</em>, <em>options=None</em><big>)</big><a class="headerlink" href="#reflex.interfaces.reactor.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Another wrapper like <tt class="docutils literal"><span class="pre">bind</span></tt>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -209,7 +227,7 @@ method and use it to create <em>event bindings</em>.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="data.html"
-                        title="previous chapter">2. <tt class="docutils literal docutils literal"><span class="pre">data</span></tt> module</a></p>
+                        title="previous chapter">2. <tt class="docutils literal"><span class="pre">data</span></tt> module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../reflex_downloads.html"
                         title="next chapter">Reflex Downloads Archive</a></p>

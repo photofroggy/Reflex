@@ -16,7 +16,7 @@ Downloads
 
 **Get stable releases of Reflex here:**
 
-* `Reflex 1 Alpha - Build 1 <http://download.botdom.com/bwgbj/>`_
+* `Reflex 1 Beta - Build 2 <http://download.botdom.com/ljpz3/>`_
 * :doc:`more... <reflex_downloads>`
 
 **Get the bleeding edge builds of Reflex here:**
