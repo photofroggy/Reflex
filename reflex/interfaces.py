@@ -70,14 +70,15 @@ class reactor:
         pass
         
     def bind(self, method, event, options=None, *additional):
-        # This is merely a wrapper.
+        """ This is a wrapper for ``reflex.control.EventManager().bind`` """
         return self._bind(self.name, method, event, options, *additional)
     
     def unbind(self, method, event, options=None):
-        # Another wrapper!
+        """ Another wrapper like ``bind``. """
         return self._unbind(self.name, method, event, options)
         
     def handler(self, event, options=None, *additional):
+        """ Can be used as a decorator to bind events. """
         def decorate(func):
             if not isinstance(func, Callable):
                 return func
