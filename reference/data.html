@@ -58,7 +58,20 @@
 <span class="target" id="data-event"></span><dl class="class">
 <dt id="reflex.data.Event">
 <em class="property">class </em><tt class="descclassname">reflex.data.</tt><tt class="descname">Event</tt><big>(</big><em>event</em>, <em>data=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#reflex.data.Event" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event class. The objects represent different events!</p>
+<dd><p>Event class.</p>
+<p>Instances of this class are used to represent events, and store
+information specific to the event being represented. The
+constructor takes the following input:</p>
+<ul class="simple">
+<li><em>str</em> <strong>event</strong> - The name of the event that the object
+represents.</li>
+<li><em>list</em> <strong>data</strong> - The data relating to the event being
+represented by the object.</li>
+</ul>
+<p>The event name is stored under the attribute <tt class="docutils literal"><span class="pre">name</span></tt>. The
+<tt class="docutils literal"><span class="pre">data</span></tt> parameter should be a list of pairs, defining a key and
+a value each. The object stores these <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt> pairs as
+<tt class="docutils literal"><span class="pre">obj.&lt;key&gt;</span> <span class="pre">=</span> <span class="pre">&lt;value&gt;</span></tt>.</p>
 </dd></dl>
 
 </div>
@@ -67,7 +80,29 @@
 <span class="target" id="data-binding"></span><dl class="class">
 <dt id="reflex.data.Binding">
 <em class="property">class </em><tt class="descclassname">reflex.data.</tt><tt class="descname">Binding</tt><big>(</big><em>source</em>, <em>method</em>, <em>event</em>, <em>options</em>, <em>additional</em><big>)</big><a class="headerlink" href="#reflex.data.Binding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event binding. Each instance represents a different binding.</p>
+<dd><p>Event binding.</p>
+<p>Each instance represents a different binding. A binding stores
+information showing how a certain method is related to a certain
+event. Different attributes define the conditions for the
+relationship. The attributes are as follows:</p>
+<ul class="simple">
+<li><em>str</em> <strong>source</strong> - The source defines a name describing where
+the binding came from, or what the method belongs to.</li>
+<li><em>callable</em> <strong>call</strong> - The method used to handle the specified
+event.</li>
+<li><em>str</em> <strong>event</strong> - The name of the event that the method
+defined in <tt class="docutils literal"><span class="pre">call</span></tt> is used to handle.</li>
+<li><em>list</em> <strong>optoins</strong> - This list defines a set of items that,
+when defined, must match the respective items provided when
+the event defined by <tt class="docutils literal"><span class="pre">event</span></tt> is triggered. If the items do
+not match, then the handler is not used. Different Rulesets
+can modify this behaviour.</li>
+<li><em>list</em> <strong>additional</strong> - Any additional information about the
+binding.</li>
+<li><em>str</em> <strong>type</strong> - A string representation of the binding.</li>
+</ul>
+<p>The constructor of this class takes the above fields as input,
+apart from <tt class="docutils literal"><span class="pre">type</span></tt>.</p>
 </dd></dl>
 
 </div>
