@@ -92,8 +92,12 @@ class EventManager:
         self.rules = {'default': Ruleset(args, self.map, self._write, self.debug)}
         for event, mod in reflex.rules.__modules__().items():
             if not hasattr(mod, 'Ruleset'):
+                self._write('>> Failed to load ruleset for event \'{0}\'.'.format(event))
+                self._write('>> No Ruleset class defined.')
                 continue
             if not issubclass(mod.Ruleset, Ruleset):
+                self._write('>> Failed to load ruleset for event \'{0}\'.'.format(event))
+                self._write('>> Ruleset provided is not a subclass of the default Ruleset.')
                 continue
             self.rules[event] = mod.Ruleset(args, self.map, self._write, self.debug)
     

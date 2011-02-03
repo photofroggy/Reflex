@@ -15,7 +15,7 @@ from collections import Callable
 # Custom
 from reflex.data import Binding
 
-class reactor:
+class Reactor:
     """ Reactor base class.
         
         Input parameters:
@@ -163,7 +163,7 @@ class Ruleset:
                 if (binding.source, binding.call, binding.options) is (source, meth, options):
                     return None
         else: self.mapref[event] = []
-        new_binding = Binding(source, meth, event, [str(i) for i in options], additional)
+        new_binding = Binding(source, meth, event, options, additional)
         self.mapref[event].append(new_binding)
         return new_binding
     
