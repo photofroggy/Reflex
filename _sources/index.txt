@@ -26,6 +26,8 @@ Downloads
 
 **Get stable releases of Reflex here:**
 
+* `Reflex 1 Beta - Build 3
+  <https://github.com/downloads/photofroggy/Reflex/Reflex_1_Beta_-_Build_3_(09022011-162451)_Cognition.zip>`
 * `Reflex 1 Beta - Build 2 <http://download.botdom.com/ljpz3/>`_
 * :doc:`more... <reflex_downloads>`
 
