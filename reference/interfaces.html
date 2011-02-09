@@ -24,7 +24,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Reflex v1 documentation" href="../index.html" />
     <link rel="up" title="Package Reference" href="index.html" />
-    <link rel="next" title="Reflex Downloads Archive" href="../reflex_downloads.html" />
+    <link rel="next" title="Reflex Tutorials" href="../help/tutorials/index.html" />
     <link rel="prev" title="2. data module" href="data.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../reflex_downloads.html" title="Reflex Downloads Archive"
+          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="data.html" title="2. data module"
@@ -148,7 +148,65 @@ if no bindings were removed.</p>
 
 </div>
 <div class="section" id="reactor-base-for-reactive-classes">
-<h2>3.2. <tt class="docutils literal"><span class="pre">reactor</span></tt> - Base for reactive classes<a class="headerlink" href="#reactor-base-for-reactive-classes" title="Permalink to this headline">¶</a></h2>
+<h2>3.2. <tt class="docutils literal"><span class="pre">Reactor</span></tt> - Base for reactive classes<a class="headerlink" href="#reactor-base-for-reactive-classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reflex.interfaces.Reactor">
+<em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">Reactor</tt><big>(</big><em>manager</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactor base class.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><strong>manager</strong> - This is a reference to an instance of a
+<a class="reference internal" href="control.html#eventmanager"><em>reflex.control.EventManager</em></a> object.
+This is used here to provide the base reactor class with the <tt class="docutils literal"><span class="pre">bind()</span></tt>,
+<tt class="docutils literal"><span class="pre">unbind()</span></tt>, <tt class="docutils literal"><span class="pre">handler()</span></tt> and <tt class="docutils literal"><span class="pre">trigger</span></tt> methods. For
+more information about these methods, see the
+documentation for the <tt class="docutils literal"><span class="pre">reflex.control.EventManager</span></tt>
+class.</li>
+<li><em>args</em> and <em>kwargs</em> - Any additional parameters given here
+are passed to the <tt class="docutils literal"><span class="pre">init()</span></tt> method.</li>
+</ul>
+<p>In the reflex system, a <em>reactor</em> is an object containing several
+methods which react to <em>events</em>, based on certain parameters.
+The methods that react to events are usually referred to as
+<em>&#8216;event handlers&#8217;</em>.</p>
+<p>To define a method as an <em>event handler</em>, the method must be
+<em>bound</em> to an event using the <tt class="docutils literal"><span class="pre">bind()</span></tt> method. This creates an
+<em>event binding</em>. An <em>event binding</em> is an object (instance of
+<tt class="docutils literal"><span class="pre">reflex.data.Binding</span></tt>) that holds information about the
+relationship between a method and an event.</p>
+<p>Developers adapting Reflex for their own applications are
+advised to use the <tt class="docutils literal"><span class="pre">reactor</span></tt> class as a base for any base
+classes they might want to create.</p>
+<p>To get an idea of how to properly create and use reactors, refer
+to the tutorials.</p>
+<dl class="method">
+<dt id="reflex.interfaces.Reactor.bind">
+<tt class="descname">bind</tt><big>(</big><em>method</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a wrapper for <tt class="docutils literal"><span class="pre">reflex.control.EventManager().bind</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Reactor.handler">
+<tt class="descname">handler</tt><big>(</big><em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor.handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can be used as a decorator to bind events.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Reactor.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reactor configuration.</p>
+<p>This is a do-nothing method. Subclasses should extend this
+method and use it to create <em>event bindings</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.interfaces.Reactor.unbind">
+<tt class="descname">unbind</tt><big>(</big><em>method</em>, <em>event</em>, <em>options=None</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Another wrapper like <tt class="docutils literal"><span class="pre">bind</span></tt>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -162,17 +220,17 @@ if no bindings were removed.</p>
   <ul>
 <li><a class="reference internal" href="#">3. <tt class="docutils literal"><span class="pre">interfaces</span></tt> module</a><ul>
 <li><a class="reference internal" href="#ruleset-binding-management">3.1. <tt class="docutils literal"><span class="pre">Ruleset</span></tt> - Binding management</a></li>
-<li><a class="reference internal" href="#reactor-base-for-reactive-classes">3.2. <tt class="docutils literal"><span class="pre">reactor</span></tt> - Base for reactive classes</a></li>
+<li><a class="reference internal" href="#reactor-base-for-reactive-classes">3.2. <tt class="docutils literal"><span class="pre">Reactor</span></tt> - Base for reactive classes</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="data.html"
-                        title="previous chapter">2. <tt class="docutils literal"><span class="pre">data</span></tt> module</a></p>
+                        title="previous chapter">2. <tt class="docutils literal docutils literal docutils literal"><span class="pre">data</span></tt> module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../reflex_downloads.html"
-                        title="next chapter">Reflex Downloads Archive</a></p>
+  <p class="topless"><a href="../help/tutorials/index.html"
+                        title="next chapter">Reflex Tutorials</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/reference/interfaces.txt"
@@ -202,7 +260,7 @@ if no bindings were removed.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../reflex_downloads.html" title="Reflex Downloads Archive"
+          <a href="../help/tutorials/index.html" title="Reflex Tutorials"
              >next</a> |</li>
         <li class="right" >
           <a href="data.html" title="2. data module"

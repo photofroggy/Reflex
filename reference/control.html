@@ -54,6 +54,179 @@
 <h1>1. <tt class="docutils literal"><span class="pre">control</span></tt> module<a class="headerlink" href="#control-module" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="eventmanager-basic-event-management">
 <h2>1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management<a class="headerlink" href="#eventmanager-basic-event-management" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="eventmanager"></span><dl class="class">
+<dt id="reflex.control.EventManager">
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x32d6cf8&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>The EventManager class provides a simple way to manage
+events and their bindings. This is one of the main things
+that application developers should be interested in using.</p>
+<p>Using the EventManager class is simple. All you have to do
+is make an instance of the class, then create event bindings
+using the <tt class="docutils literal"><span class="pre">bind()</span></tt> method. Once you have done that, you can trigger
+events using the <tt class="docutils literal"><span class="pre">trigger()</span></tt> method. A simple example is below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.data</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">example</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Hello, world&#39;</span><span class="p">)</span>
+
+<span class="n">events</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s">&#39;main app&#39;</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">)</span>
+
+<span class="n">events</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The above example does not show the full power of the system. View
+the tutorials to get a better idea of how things can be used.</p>
+<dl class="method">
+<dt id="reflex.control.EventManager.bind">
+<tt class="descname">bind</tt><big>(</big><em>source</em>, <em>method</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bind a method to an event.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>str</em> <strong>source</strong> - The origin of the method given to
+handle the event. This should be a name describing where
+the method may have come from, so different things may be
+appropriate in different applications.</li>
+<li><em>callable</em> <strong>method</strong> - This is a method that will be
+invoked when the event defined in the event parameter is
+triggered.</li>
+<li><em>str</em> <strong>event</strong> - The event that the method is being bound
+to.</li>
+<li><em>list</em> <strong>options</strong> - An iterable of conditions the event
+must meet. If given, then corresponding items provided
+when the event is triggered must match these items.</li>
+<li><em>list</em> <strong>additional</strong> - Any additional arguments which
+developers may want to use in their systems.</li>
+</ul>
+<p>This is essentially the same concept as creating an event
+listener. The binding is actually done in the ruleset object
+being used for the event.</p>
+<p>If the event has no explicit ruleset, then the default
+ruleset is used (reflex.interfaces.Ruleset).</p>
+<p>Returns <tt class="xref docutils literal"><span class="pre">None</span></tt> on failure. Otherwise, returns the binding
+created. The event binding is an instance of the
+<tt class="docutils literal"><span class="pre">refelx.data.Binding</span></tt> class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.bindset">
+<tt class="descname">bindset</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.bindset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a bindset.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>str</em> <strong>source</strong> - The binding source to be used when binding or
+unbinding events.</li>
+</ul>
+<p>This method is only meant for use in
+<tt class="docutils literal"><span class="pre">reflex.interfaces.reactor</span></tt>. This method returns a tuple
+containing both the <tt class="docutils literal"><span class="pre">bind()</span></tt> and <tt class="docutils literal"><span class="pre">unbind()</span></tt> methods,
+except that the methods have been wrapped to always use the
+same <tt class="docutils literal"><span class="pre">source</span></tt> parameter, as given to this method.</p>
+<p><strong>Note:</strong> This method is currently not in use, so may be
+removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.clear_bindings">
+<tt class="descname">clear_bindings</tt><big>(</big><big>)</big><a class="headerlink" href="#reflex.control.EventManager.clear_bindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes all event bindings that are being stored
+in the event manager.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.default_ruleset">
+<tt class="descname">default_ruleset</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.default_ruleset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revert rulesets to defaults.</p>
+<p>This method simply loads the default ruleset into the
+<tt class="docutils literal"><span class="pre">rules</span></tt> attribute. If any other rulesets were present,
+they will be lost.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.define_rules">
+<tt class="descname">define_rules</tt><big>(</big><em>event</em>, <em>ruleset</em>, <em>*args</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.define_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a ruleset.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>str</em> <strong>event</strong> - The event that the ruleset defines the
+rules for.</li>
+<li><em>Ruleset</em> <strong>ruleset</strong> - The ruleset to use for the given
+<tt class="docutils literal"><span class="pre">event</span></tt> namespace. This should be a class! The method
+creates an instance of the class itself.</li>
+<li><em>args</em> - Any other arguments that might need to be given
+to the ruleset on instantiation.</li>
+</ul>
+<p>This method is used to define a ruleset for a given event
+namespace.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.handler">
+<tt class="descname">handler</tt><big>(</big><em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an event handler.</p>
+<p>This method provides a decorator interface for the <tt class="docutils literal"><span class="pre">bind()</span></tt>
+method.</p>
+<p>The <tt class="docutils literal"><span class="pre">source</span></tt> parameter for the <tt class="docutils literal"><span class="pre">bind()</span></tt> method is given
+the name of the callable, using <tt class="docutils literal"><span class="pre">callable.__name__</span></tt>. A
+brief example is given below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.data</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+
+<span class="c"># Create an event handler using the decorator method.</span>
+
+<span class="nd">@events.handler</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_handler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;Hello, world!&#39;</span><span class="p">)</span>
+
+<span class="c"># Trigger the &#39;example&#39; event.</span>
+<span class="n">events</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">))</span>
+<span class="c"># &gt;&gt;&gt; Hello, world!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called by <tt class="docutils literal"><span class="pre">__init__</span></tt>.</p>
+<p>On its own, it doesn&#8217;t do anything. This is designed as a
+method which can be overridden by child classes so developers
+don&#8217;t have to interfere with <tt class="docutils literal"><span class="pre">__init__</span></tt>.</p>
+<p>This method is given the same input given to <tt class="docutils literal"><span class="pre">__init__</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.trigger">
+<tt class="descname">trigger</tt><big>(</big><em>data=None</em>, <em>*args</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger an event.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">reflex.data.Event</span></tt> <strong>data</strong> - This parameter should be
+an event object, using either the <tt class="docutils literal"><span class="pre">reflex.data.Event</span></tt>
+class or a subclass of it.</li>
+<li><strong>args</strong> - Any other additional arguments that developers
+want to pass to event handlers.</li>
+</ul>
+<p>This method is mainly a wrapper for the <tt class="docutils literal"><span class="pre">run()</span></tt> method of
+the ruleset object being used for the event defined by the
+object given in the <tt class="docutils literal"><span class="pre">data</span></tt> parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.EventManager.unbind">
+<tt class="descname">unbind</tt><big>(</big><em>source</em>, <em>method</em>, <em>event</em>, <em>options=None</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an event binding for a method.</p>
+<p>This is the reverse of the bind method. Once again, the
+unbinding is actually done by the ruleset object being used
+for the event.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

@@ -1,9 +1,6 @@
 Package Reference
 =================
 
-:Release: |version|
-:Date: |today|
-
 This library reference manual desribes the classes and modules within
 the ``reflex`` package. The package contains classes which can be used
 as a full event system by applications, allowing developers to create

@@ -14,6 +14,6 @@ to understand how to use it.
         :maxdepth: 2
         
         basic
-        help/tutorials/reactors
-        help/tutorials/conditions
-        help/tutorials/extendability
+        reactors
+        conditions
+        extendability

@@ -8,8 +8,8 @@ The interfaces module contains classes providing different interfaces for differ
 .. autoclass:: reflex.interfaces.Ruleset
     :members:
 
-3.2. ``reactor`` - Base for reactive classes
+3.2. ``Reactor`` - Base for reactive classes
 ---------------------------------------------
-.. autoclass:: reflex.interfaces.reactor
+.. autoclass:: reflex.interfaces.Reactor
     :members:
 

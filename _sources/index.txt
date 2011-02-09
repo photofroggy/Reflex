@@ -3,6 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
+.. toctree::
+   :hidden:
+   
+   reflex_downloads
+   reference/index
+   help/tutorials/index
+   help/concepts/index
+   help/terminology/index
+    
 Reflex - An Event System
 ==================================
 **Reflex** is a Python package created by `photofroggy <http://photofroggy.deviantart.com>`_.
@@ -52,9 +62,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-.. toctree::
-   :hidden:
-   
-   reference/index
-   reflex_downloads

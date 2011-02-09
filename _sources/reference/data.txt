@@ -1,6 +1,6 @@
 2. ``data`` module
 =============================================
-
+    
 This module contains objects representing data used in the event system.
 
 2.1 ``Event`` - Event data representation
