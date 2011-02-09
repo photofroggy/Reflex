@@ -53,18 +53,19 @@ class EventManager:
     
     class info:
         version = 1
-        build = 2
-        stamp = '23012011-185751'
+        build = 3
+        stamp = '09022011-162451'
         name = 'Cognition'
         state = 'Beta'
     
     def __init__(self, output=writeout, debug=False, *args, **kwargs):
         self._write = writeout
         self.debug = debug
+        self._rules = Ruleset
         self.map = {}
         self.rules = {}
         self.init(*args)
-        self.load_rules(*args)
+        self.default_ruleset(*args)
     
     def init(self, *args):
         """ This method is called by ``__init__``.
@@ -77,29 +78,35 @@ class EventManager:
         """
         pass
     
-    def load_rules(self, *args):
-        """ Load any rulesets that are present in reflex.rules.
+    def default_ruleset(self, *args):
+        """ Revert rulesets to defaults.
             
-            The method loads and stores any rulesets that are found. By
-            definition, rulesets must be extensions of
-            ``reflex.interfaces.Ruleset``, and must also be named
-            Ruleset. The ruleset is applied to events of the same name
-            as the module that the ruleset is saved in. For example,
-            the class ``reflex.rules.example.Ruleset`` will be applied
-            to the example event.
+            This method simply loads the default ruleset into the
+            ``rules`` attribute. If any other rulesets were present,
+            they will be lost.
         """
-        import reflex.rules
-        self.rules = {'default': Ruleset(args, self.map, self._write, self.debug)}
-        for event, mod in reflex.rules.__modules__().items():
-            if not hasattr(mod, 'Ruleset'):
-                self._write('>> Failed to load ruleset for event \'{0}\'.'.format(event))
-                self._write('>> No Ruleset class defined.')
-                continue
-            if not issubclass(mod.Ruleset, Ruleset):
-                self._write('>> Failed to load ruleset for event \'{0}\'.'.format(event))
-                self._write('>> Ruleset provided is not a subclass of the default Ruleset.')
-                continue
-            self.rules[event] = mod.Ruleset(args, self.map, self._write, self.debug)
+        self.rules = {'default': self._rules(args, self.map, self._write, self.debug)}
+    
+    def define_rules(self, event, ruleset, *args):
+        """ Define a ruleset.
+            
+            Input parameters:
+            
+            * *str* **event** - The event that the ruleset defines the
+              rules for.
+            * *Ruleset* **ruleset** - The ruleset to use for the given
+              ``event`` namespace. This should be a class! The method
+              creates an instance of the class itself.
+            * *args* - Any other arguments that might need to be given
+              to the ruleset on instantiation.
+            
+            This method is used to define a ruleset for a given event
+            namespace.
+        """
+        if not issubclass(ruleset, Ruleset):
+            return False
+        self.rules[event] = mod.Ruleset(args, self.map, self._write, self.debug)
+        return True
     
     def bind(self, source, method, event, options=None, *additional):
         """ Bind a method to an event.
