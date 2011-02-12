@@ -53,13 +53,13 @@ class EventManager:
     
     class info:
         version = 1
-        build = 3
-        stamp = '09022011-162451'
+        build = 4
+        stamp = '12022011-012542'
         name = 'Cognition'
         state = 'Beta'
     
     def __init__(self, output=writeout, debug=False, *args, **kwargs):
-        self._write = writeout
+        self._write = output
         self.debug = debug
         self._rules = Ruleset
         self.map = {}
@@ -105,7 +105,7 @@ class EventManager:
         """
         if not issubclass(ruleset, Ruleset):
             return False
-        self.rules[event] = mod.Ruleset(args, self.map, self._write, self.debug)
+        self.rules[event] = ruleset(args, self.map, self._write, self.debug)
         return True
     
     def bind(self, source, method, event, options=None, *additional):
