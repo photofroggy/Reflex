@@ -10,6 +10,7 @@
 # Standard Lib imports.
 import os
 import sys
+import traceback
 from functools import wraps
 from collections import Callable
 # Custom
@@ -230,7 +231,10 @@ class Ruleset:
         except Exception as e:
             log = self._write
             log('Source "{0}" failed to handle event "{1}"!'.format(binding.source, binding.event))
-            log('Error message: {0}.'.format(e.args[0]))
+            log('Error:')
+            tb = traceback.format_exc().splitlines()
+            for line in tb:
+                log('>> {0}'.format(line))
         return None
 
 # EOF
