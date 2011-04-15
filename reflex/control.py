@@ -141,8 +141,8 @@ class EventManager:
         """
         if not isinstance(method, Callable):
             return None
-        key = 'default' if not event in self.rules.keys() else event
-        return self.rules[key].bind(source, method, event, options, *additional)
+        ruleset = self.rules.get(event, self.rules['default'])
+        return ruleset.bind(source, method, event, options, *additional)
     
     def unbind(self, source, method, event, options=None):
         """ Remove an event binding for a method.
@@ -151,8 +151,8 @@ class EventManager:
             unbinding is actually done by the ruleset object being used
             for the event.
         """
-        key = 'default' if not event in self.rules.keys() else event
-        return self.rules[key].unbind(source, method, event, options)
+        ruleset = self.rules.get(event, self.rules['default'])
+        return ruleset.unbind(source, method, event, options)
     
     def handler(self, event, options=None, *additional):
         """ Create an event handler.
@@ -208,10 +208,10 @@ class EventManager:
         del data.rules
         if not event in self.map.keys():
             return []
-        key = 'default' if not event in self.rules.keys() else event
-        if hasattr(self.rules[key], 'trigger'):
-            return self.rules[key].trigger(data, rules, *args)
-        return [self.rules[key].run(binding, data, rules, *args) for binding in self.map[event]]
+        ruleset = self.rules.get(event, self.rules['default'])
+        if hasattr(ruleset, 'trigger'):
+            return ruleset.trigger(data, rules, *args)
+        return [ruleset.run(binding, data, rules, *args) for binding in self.map[event]]
     
     def clear_bindings(self):
         """ This method removes all event bindings that are being stored
