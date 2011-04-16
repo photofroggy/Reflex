@@ -60,6 +60,9 @@ class Reactor:
         self._unbind = manager.unbind
         self.trigger = manager.trigger
         
+        if self.name is None:
+            self.name = str(self.__class__).split('.')[-2].replace('_', ' ')
+        
         self.init(*args, **kwargs)
     
     def init(self, *args, **kwargs):

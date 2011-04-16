@@ -13,7 +13,10 @@
 # Standard Lib imports.
 import os
 import sys
+import imp
+import pkgutil
 import inspect
+import traceback
 from copy import copy
 from functools import wraps
 from collections import Callable
@@ -53,7 +56,7 @@ class EventManager:
     
     class info:
         version = 1
-        build = 5
+        build = 6
         stamp = '20022011-003204'
         name = 'Cognition'
         state = 'Beta'
@@ -244,5 +247,117 @@ class EventManager:
                 return func(source, *args, **kwargs)
             return new
         return (wrapit(self.bind), wrapit(self.unbind))
+
+
+class ReactorPlatform:
+    """ The Reactor Platform provides a simple way to load
+        all rectors stored inside a given package. 
+    
+        This can be used as the basis for an extension system in an application,
+        if implemented properly. To use the class, create an instance of the
+        class, and call the load_reactors module with appropriate parameters.
+        For example, if your application's plugin package was called ``plugins``
+        and the plugin classes were called ``Plugin`` in each module, you would
+        do something similar to the following to load the plugins::
+        
+            import plugins
+            from reflex.control import EventManager
+            from reflex.control import ReactorPlatform
+            
+            # Create an event manager.
+            events = EventManager()
+            
+            # Create a platform.
+            platform = ReactorPlatform()
+            # Load our plugins.
+            platform.load_reactors(plugins, 'Plugin', events)
+            
+            # Plugins can now be accessed as such:
+            #   platform.loaded[plugin_name]
+            # Easy as pie!
+        
+        Quite simple, really. It takes more than that to fully implement an
+        extension or plugin system, but the above provides a solid base for any
+        system you can think up. Or it could be terrible.
+    """
+    
+    def __init__(self, output=writeout, debug=False, *args, **kwargs):
+        self.log = output
+        self.debug = debug
+        self.modules = {}
+        self.loaded = {}
+        self.init(*args, **kwargs)
+    
+    def init(*args, **kwargs):
+        """ This is a do-nothing method.
+            
+            If you are extending this class and want to perform operations when
+            an instance of the class is made, override this method. This method
+            is called by ``__init__()``.
+        """
+        pass
+    
+    def load_modules(self, rPackage, required='Reactor'):
+        if self.debug:
+            self.log('** Checking modules in the {0} package.'.format(rPackage.__name__))
+        modules = {}
+        walker = pkgutil.walk_packages(rPackage.__path__, rPackage.__name__ + '.')
+        for tup in walker:
+            name = tup[1]
+            
+            if self.debug:
+                self.log('** Found module \'{0}\'.'.format(name))
+                
+            if name in self.modules.keys():
+                if self.debug:
+                    self.log('** Previously loaded module. Reloading!')
+                imp.reload(self.modules[name])
+                modules[name] = self.modules[name]
+                continue
+                
+            loader = pkgutil.find_loader(name)
+            mod = loader.load_module(name)
+            
+            if not hasattr(mod, required):
+                if self.debug:
+                    self.log('>> Ignoring module {0}.'.format(name))
+                    self.log('>> Module contains no {0} class.'.format(required))
+                continue
+            
+            modules[name] = mod
+        self.modules = modules
+    
+    def load_reactors(self, rPackage, cls='Reactor', *args, **kwargs):
+        """ Loads all reactors from a given package.
+            
+            Input parameters:
+            
+            * *module* **rPackage** - The package from which to load modules and
+            their Reactor classes, depending on if they have any.
+            * *str* **cls** - The name of the class to look for in each module
+            within the package defined in ``rPackage``.
+            
+            Any extra arguments are passed to the Reactor classes on
+            instantiation.
+            
+        """
+        if self.modules == {}:
+            self.log('** Loading {0}s...'.format(cls.lower()))
+        self.load_modules(rPackage)
+        self.loaded = {}
+        for name, mod in self.modules.items():
+            try:
+                robj = getattr(mod, cls)(*args, **kwargs)
+                rname = robj.name
+                self.loaded[rname] = robj
+            except Exception as e:
+                self.log('>> Failed to load {0} from {1}!'.format(cls.lower(), name))
+                self.log('>> Error:')
+                tb = traceback.format_exc().splitlines()
+                for line in tb:
+                    self.log('>> {0}'.format(line))
+        
+        if self.debug:
+            self.log('** Loaded {0}s: {1}'.format(cls.lower(), ', '.join(self.loaded.keys())))
 
 # EOF
