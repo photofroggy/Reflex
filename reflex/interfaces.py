@@ -50,7 +50,7 @@ class Reactor:
         to the tutorials.
     """
     
-    name = 'Base Reactor'
+    name = None
     
     def __init__(self, manager, *args, **kwargs):
         """ This method stores references to utility methods from the
@@ -120,6 +120,7 @@ class Ruleset:
         self.mapref = mapref
         self._write = output
         self.debug = debug
+        
         self.init(*args)
     
     def init(self, *args):

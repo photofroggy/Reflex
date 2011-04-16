@@ -249,38 +249,15 @@ class EventManager:
         return (wrapit(self.bind), wrapit(self.unbind))
 
 
-class ReactorPlatform:
-    """ The Reactor Platform provides a simple way to load
-        all rectors stored inside a given package. 
-    
-        This can be used as the basis for an extension system in an application,
-        if implemented properly. To use the class, create an instance of the
-        class, and call the load_reactors module with appropriate parameters.
-        For example, if your application's plugin package was called ``plugins``
-        and the plugin classes were called ``Plugin`` in each module, you would
-        do something similar to the following to load the plugins::
+class PackageBattery:
+    """ The Package Battery is the base class that provides
+        the functionality of loading all modules within a given
+        package, and according to certain conditions.
         
-            import plugins
-            from reflex.control import EventManager
-            from reflex.control import ReactorPlatform
-            
-            # Create an event manager.
-            events = EventManager()
-            
-            # Create a platform.
-            platform = ReactorPlatform()
-            # Load our plugins.
-            platform.load_reactors(plugins, 'Plugin', events)
-            
-            # Plugins can now be accessed as such:
-            #   platform.loaded[plugin_name]
-            # Easy as pie!
-        
-        Quite simple, really. It takes more than that to fully implement an
-        extension or plugin system, but the above provides a solid base for any
-        system you can think up. Or it could be terrible.
+        This functionality is used by the ``ReactorBattery`` and the
+        ``RulesetBattery`` in Reflex.
     """
-    
+
     def __init__(self, output=writeout, debug=False, *args, **kwargs):
         self.log = output
         self.debug = debug
@@ -288,7 +265,7 @@ class ReactorPlatform:
         self.loaded = {}
         self.init(*args, **kwargs)
     
-    def init(*args, **kwargs):
+    def init(self, *args, **kwargs):
         """ This is a do-nothing method.
             
             If you are extending this class and want to perform operations when
@@ -297,11 +274,11 @@ class ReactorPlatform:
         """
         pass
     
-    def load_modules(self, rPackage, required='Reactor'):
+    def load_modules(self, package, required='ClassName'):
         if self.debug:
-            self.log('** Checking modules in the {0} package.'.format(rPackage.__name__))
+            self.log('** Checking modules in the {0} package.'.format(package.__name__))
         modules = {}
-        walker = pkgutil.walk_packages(rPackage.__path__, rPackage.__name__ + '.')
+        walker = pkgutil.walk_packages(package.__path__, package.__name__ + '.')
         for tup in walker:
             name = tup[1]
             
@@ -327,15 +304,17 @@ class ReactorPlatform:
             modules[name] = mod
         self.modules = modules
     
-    def load_reactors(self, rPackage, cls='Reactor', *args, **kwargs):
-        """ Loads all reactors from a given package.
+    def load_objects(self, manager, package, cls='ClassName', *args, **kwargs):
+        """ Loads all objects from a given package.
             
             Input parameters:
             
-            * *module* **rPackage** - The package from which to load modules and
-              their Reactor classes, depending on if they have any.
+            * *:ref:`reflex.control.EventManager <eventmanager>`* **manager** -
+              A reference to an EventManager object.
+            * *package* **package** - The package from which to load modules and
+              their objects, depending on if they have any.
             * *str* **cls** - The name of the class to look for in each module
-              within the package defined in ``rPackage``.
+              within the package defined in ``package``.
             
             Any extra arguments are passed to the Reactor classes on
             instantiation.
@@ -343,13 +322,11 @@ class ReactorPlatform:
         """
         if self.modules == {}:
             self.log('** Loading {0}s...'.format(cls.lower()))
-        self.load_modules(rPackage)
+        self.load_modules(package, cls)
         self.loaded = {}
         for name, mod in self.modules.items():
             try:
-                robj = getattr(mod, cls)(*args, **kwargs)
-                rname = robj.name
-                self.loaded[rname] = robj
+                self.load_object(manager, mod, cls, *args, **kwargs)
             except Exception as e:
                 self.log('>> Failed to load {0} from {1}!'.format(cls.lower(), name))
                 self.log('>> Error:')
@@ -359,5 +336,138 @@ class ReactorPlatform:
         
         if self.debug:
             self.log('** Loaded {0}s: {1}'.format(cls.lower(), ', '.join(self.loaded.keys())))
+        
+    def load_object(self, manager, module, cls, *args, **kwargs):
+        """ Load a single object from a single class. """
+        obj = getattr(module, cls)(*args, **kwargs)
+        name = str(obj.__class__).split('.')[-2].replace('_', ' ')
+        self.loaded[name] = obj
+    
+        
+class ReactorBattery(PackageBattery):
+    """ The Reactor Battery provides a simple way to load
+        all rectors stored inside a given package. 
+    
+        This can be used as the basis for an extension system in an application,
+        if implemented properly. To use the class, create an instance of the
+        class, and call the load_reactors module with appropriate parameters.
+        For example, if your application's plugin package was called ``plugins``
+        and the plugin classes were called ``Plugin`` in each module, you would
+        do something similar to the following to load the plugins::
+        
+            import plugins
+            from reflex.control import EventManager
+            from reflex.control import ReactorBattery
+            
+            # Create an event manager.
+            events = EventManager()
+            
+            # Create a battery.
+            battery = ReactorBattery()
+            # Load our plugins.
+            battery.load_objects(events, plugins, 'Plugin',)
+            
+            # Plugins can now be accessed as such:
+            #   battery.loaded[plugin_name]
+            # Easy as pie!
+        
+        Quite simple, really. It takes more than that to fully implement an
+        extension or plugin system, but the above provides a solid base for any
+        system you can think up. Or it could be terrible.
+    """
+    
+    def load_modules(self, package, required='Reactor'):
+        super(ReactorBattery, self).load_modules(package, required)
+    
+    def load_objects(self, manager, package, cls='Reactor', *args, **kwargs):
+        """ Loads all reactors from a given package.
+            
+            Input parameters:
+            
+            * *:ref:`reflex.control.EventManager <eventmanager>`* **manager** -
+              A reference to an EventManager object. Reactors are given this
+              reference so that they can create event bindings.
+            * *package* **package** - The package from which to load modules and
+              their Reactor classes, depending on if they have any.
+            * *str* **cls** - The name of the class to look for in each module
+              within the package defined in ``package``.
+            
+            Any extra arguments are passed to the Reactor classes on
+            instantiation.
+            
+        """
+        super(ReactorBattery, self).load_objects(manager, package, cls, *args, **kwargs)
+    
+    def load_object(self, manager, module, cls, *args, **kwargs):
+        robj = getattr(module, cls)(manager, *args, **kwargs)
+        rname = robj.name
+        self.loaded[rname] = robj
+    
+        
+class RulesetBattery(PackageBattery):
+    """ The Ruleset Battery provides a simple way to load
+        all rulesets stored inside a given package. 
+    
+        Use this in conjunction with the ReactorBattery to create a richer
+        plugin system. Rulesets allow greater control over how your system
+        handles specific events. Below is a simple example of how to use the
+        Ruleset Battery::
+        
+            import plugins
+            import rules
+            from reflex.control import EventManager
+            from reflex.control import ReactorBattery
+            from reflex.control import RulesetBattery
+            
+            # Create an event manager.
+            events = EventManager()
+            
+            # Create a ruleset battery.
+            rulesets = RulesetBattery()
+            # Load our rulesets.
+            rulesets.load_objects(events, rules)
+            # All rulesets in the rules package should now be loaded
+            # and registered with the event manager.
+            
+            # Create a reactor battery.
+            plugin = ReactorBattery()
+            # Load our plugins.
+            plugin.load_objects(events, plugins, 'Plugin')
+            
+            # Plugins can now be accessed as such:
+            #   plugin.loaded[plugin_name]
+            # Easy as pie!
+        
+        Quite simple, really. It takes more than that to fully implement an
+        extension or plugin system, but the above provides a solid base for any
+        system you can think up. Or it could be terrible.
+    """
+    
+    def load_modules(self, package, required='Ruleset'):
+        super(RulesetBattery, self).load_modules(package, required)
+    
+    def load_objects(self, manager, package, cls='Ruleset', *args, **kwargs):
+        """ Loads all rulesets from a given package.
+            
+            Input parameters:
+            
+            * *:ref:`reflex.control.EventManager <eventmanager>`* **manager** -
+              A reference to an EventManager object. This is used to define
+              rules using the rulesets in the given package.
+            * *package* **package** - The package from which to load modules and
+              their Ruleset classes, depending on if they have any.
+            * *str* **cls** - The name of the class to look for in each module
+              within the package defined in ``package``.
+            
+            Any extra arguments are passed to the Ruleset classes on
+            instantiation.
+            
+        """
+        super(RulesetBattery, self).load_objects(manager, package, cls, *args, **kwargs)
+    
+    def load_object(self, manager, module, cls, *args, **kwargs):
+        rulename = str(module.__name__).split('.')[-1]
+        manager.define_rules(rulename, getattr(module, cls), *args)
+        self.loaded[rulename] = 1
 
 # EOF
