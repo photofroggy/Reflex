@@ -8,3 +8,10 @@
 .. autoclass:: reflex.control.EventManager
     :members:
 
+1.2 ``ReactorPlatform`` - Plugin loading system
+------------------------------------------------
+.. _reactorplatform:
+
+.. autoclass:: reflex.control.ReactorPlatform
+    :members:
+

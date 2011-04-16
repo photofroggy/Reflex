@@ -56,7 +56,7 @@
 <h2>1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management<a class="headerlink" href="#eventmanager-basic-event-management" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="eventmanager"></span><dl class="class">
 <dt id="reflex.control.EventManager">
-<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x204ccf8&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x02DECF70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>The EventManager class provides a simple way to manage
 events and their bindings. This is one of the main things
 that application developers should be interested in using.</p>
@@ -228,6 +228,66 @@ for the event.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="reactorplatform-plugin-loading-system">
+<h2>1.2 <tt class="docutils literal"><span class="pre">ReactorPlatform</span></tt> - Plugin loading system<a class="headerlink" href="#reactorplatform-plugin-loading-system" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="reactorplatform"></span><dl class="class">
+<dt id="reflex.control.ReactorPlatform">
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">ReactorPlatform</tt><big>(</big><em>output=&lt;function writeout at 0x02DECF70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Reactor Platform provides a simple way to load
+all rectors stored inside a given package.</p>
+<p>This can be used as the basis for an extension system in an application,
+if implemented properly. To use the class, create an instance of the
+class, and call the load_reactors module with appropriate parameters.
+For example, if your application&#8217;s plugin package was called <tt class="docutils literal"><span class="pre">plugins</span></tt>
+and the plugin classes were called <tt class="docutils literal"><span class="pre">Plugin</span></tt> in each module, you would
+do something similar to the following to load the plugins:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plugins</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">ReactorPlatform</span>
+
+<span class="c"># Create an event manager.</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+
+<span class="c"># Create a platform.</span>
+<span class="n">platform</span> <span class="o">=</span> <span class="n">ReactorPlatform</span><span class="p">()</span>
+<span class="c"># Load our plugins.</span>
+<span class="n">platform</span><span class="o">.</span><span class="n">load_reactors</span><span class="p">(</span><span class="n">plugins</span><span class="p">,</span> <span class="s">&#39;Plugin&#39;</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
+
+<span class="c"># Plugins can now be accessed as such:</span>
+<span class="c">#   platform.loaded[plugin_name]</span>
+<span class="c"># Easy as pie!</span>
+</pre></div>
+</div>
+<p>Quite simple, really. It takes more than that to fully implement an
+extension or plugin system, but the above provides a solid base for any
+system you can think up. Or it could be terrible.</p>
+<dl class="method">
+<dt id="reflex.control.ReactorPlatform.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a do-nothing method.</p>
+<p>If you are extending this class and want to perform operations when
+an instance of the class is made, override this method. This method
+is called by <tt class="docutils literal"><span class="pre">__init__()</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.ReactorPlatform.load_reactors">
+<tt class="descname">load_reactors</tt><big>(</big><em>rPackage</em>, <em>cls='Reactor'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform.load_reactors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all reactors from a given package.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>module</em> <strong>rPackage</strong> - The package from which to load modules and</li>
+</ul>
+<p>their Reactor classes, depending on if they have any.
+* <em>str</em> <strong>cls</strong> - The name of the class to look for in each module
+within the package defined in <tt class="docutils literal"><span class="pre">rPackage</span></tt>.</p>
+<p>Any extra arguments are passed to the Reactor classes on
+instantiation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -240,6 +300,7 @@ for the event.</p>
   <ul>
 <li><a class="reference internal" href="#">1. <tt class="docutils literal"><span class="pre">control</span></tt> module</a><ul>
 <li><a class="reference internal" href="#eventmanager-basic-event-management">1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management</a></li>
+<li><a class="reference internal" href="#reactorplatform-plugin-loading-system">1.2 <tt class="docutils literal"><span class="pre">ReactorPlatform</span></tt> - Plugin loading system</a></li>
 </ul>
 </li>
 </ul>
@@ -290,7 +351,7 @@ for the event.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2011, photofroggy.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.6.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
 </html>
