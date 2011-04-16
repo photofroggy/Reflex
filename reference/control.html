@@ -56,7 +56,7 @@
 <h2>1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management<a class="headerlink" href="#eventmanager-basic-event-management" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="eventmanager"></span><dl class="class">
 <dt id="reflex.control.EventManager">
-<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x02DECF70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x02E6CD70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>The EventManager class provides a simple way to manage
 events and their bindings. This is one of the main things
 that application developers should be interested in using.</p>
@@ -232,7 +232,7 @@ for the event.</p>
 <h2>1.2 <tt class="docutils literal"><span class="pre">ReactorPlatform</span></tt> - Plugin loading system<a class="headerlink" href="#reactorplatform-plugin-loading-system" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="reactorplatform"></span><dl class="class">
 <dt id="reflex.control.ReactorPlatform">
-<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">ReactorPlatform</tt><big>(</big><em>output=&lt;function writeout at 0x02DECF70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">ReactorPlatform</tt><big>(</big><em>output=&lt;function writeout at 0x02E6CD70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Reactor Platform provides a simple way to load
 all rectors stored inside a given package.</p>
 <p>This can be used as the basis for an extension system in an application,
@@ -276,11 +276,11 @@ is called by <tt class="docutils literal"><span class="pre">__init__()</span></t
 <dd><p>Loads all reactors from a given package.</p>
 <p>Input parameters:</p>
 <ul class="simple">
-<li><em>module</em> <strong>rPackage</strong> - The package from which to load modules and</li>
+<li><em>module</em> <strong>rPackage</strong> - The package from which to load modules and
+their Reactor classes, depending on if they have any.</li>
+<li><em>str</em> <strong>cls</strong> - The name of the class to look for in each module
+within the package defined in <tt class="docutils literal"><span class="pre">rPackage</span></tt>.</li>
 </ul>
-<p>their Reactor classes, depending on if they have any.
-* <em>str</em> <strong>cls</strong> - The name of the class to look for in each module
-within the package defined in <tt class="docutils literal"><span class="pre">rPackage</span></tt>.</p>
 <p>Any extra arguments are passed to the Reactor classes on
 instantiation.</p>
 </dd></dl>
