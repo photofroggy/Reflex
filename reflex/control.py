@@ -333,9 +333,9 @@ class ReactorPlatform:
             Input parameters:
             
             * *module* **rPackage** - The package from which to load modules and
-            their Reactor classes, depending on if they have any.
+              their Reactor classes, depending on if they have any.
             * *str* **cls** - The name of the class to look for in each module
-            within the package defined in ``rPackage``.
+              within the package defined in ``rPackage``.
             
             Any extra arguments are passed to the Reactor classes on
             instantiation.
