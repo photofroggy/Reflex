@@ -8,10 +8,24 @@
 .. autoclass:: reflex.control.EventManager
     :members:
 
-1.2 ``ReactorPlatform`` - Plugin loading system
+1.2 ``PackageBattery`` - Package loading system
 ------------------------------------------------
-.. _reactorplatform:
+.. _packagebattery:
 
-.. autoclass:: reflex.control.ReactorPlatform
+.. autoclass:: reflex.control.PackageBattery
+    :members:
+
+1.3 ``ReactorBattery`` - Plugin loading system
+------------------------------------------------
+.. _reactorbattery:
+
+.. autoclass:: reflex.control.ReactorBattery
+    :members:
+
+1.4 ``RulesetBattery`` - Ruleset loading system
+------------------------------------------------
+.. _rulesetbattery:
+
+.. autoclass:: reflex.control.RulesetBattery
     :members:
 

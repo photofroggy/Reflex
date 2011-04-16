@@ -56,7 +56,7 @@
 <h2>1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management<a class="headerlink" href="#eventmanager-basic-event-management" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="eventmanager"></span><dl class="class">
 <dt id="reflex.control.EventManager">
-<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x02E6CD70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">EventManager</tt><big>(</big><em>output=&lt;function writeout at 0x02B17C30&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.EventManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>The EventManager class provides a simple way to manage
 events and their bindings. This is one of the main things
 that application developers should be interested in using.</p>
@@ -228,12 +228,57 @@ for the event.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="reactorplatform-plugin-loading-system">
-<h2>1.2 <tt class="docutils literal"><span class="pre">ReactorPlatform</span></tt> - Plugin loading system<a class="headerlink" href="#reactorplatform-plugin-loading-system" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="reactorplatform"></span><dl class="class">
-<dt id="reflex.control.ReactorPlatform">
-<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">ReactorPlatform</tt><big>(</big><em>output=&lt;function writeout at 0x02E6CD70&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform" title="Permalink to this definition">¶</a></dt>
-<dd><p>The Reactor Platform provides a simple way to load
+<div class="section" id="packagebattery-package-loading-system">
+<h2>1.2 <tt class="docutils literal"><span class="pre">PackageBattery</span></tt> - Package loading system<a class="headerlink" href="#packagebattery-package-loading-system" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="packagebattery"></span><dl class="class">
+<dt id="reflex.control.PackageBattery">
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">PackageBattery</tt><big>(</big><em>output=&lt;function writeout at 0x02B17C30&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.PackageBattery" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Package Battery is the base class that provides
+the functionality of loading all modules within a given
+package, and according to certain conditions.</p>
+<p>This functionality is used by the <tt class="docutils literal"><span class="pre">ReactorBattery</span></tt> and the
+<tt class="docutils literal"><span class="pre">RulesetBattery</span></tt> in Reflex.</p>
+<dl class="method">
+<dt id="reflex.control.PackageBattery.init">
+<tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.PackageBattery.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a do-nothing method.</p>
+<p>If you are extending this class and want to perform operations when
+an instance of the class is made, override this method. This method
+is called by <tt class="docutils literal"><span class="pre">__init__()</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.PackageBattery.load_object">
+<tt class="descname">load_object</tt><big>(</big><em>manager</em>, <em>module</em>, <em>cls</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.PackageBattery.load_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a single object from a single class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reflex.control.PackageBattery.load_objects">
+<tt class="descname">load_objects</tt><big>(</big><em>manager</em>, <em>package</em>, <em>cls='ClassName'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.PackageBattery.load_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all objects from a given package.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>:ref:`reflex.control.EventManager &lt;eventmanager&gt;`</em> <strong>manager</strong> -
+A reference to an EventManager object.</li>
+<li><em>package</em> <strong>package</strong> - The package from which to load modules and
+their objects, depending on if they have any.</li>
+<li><em>str</em> <strong>cls</strong> - The name of the class to look for in each module
+within the package defined in <tt class="docutils literal"><span class="pre">package</span></tt>.</li>
+</ul>
+<p>Any extra arguments are passed to the Reactor classes on
+instantiation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reactorbattery-plugin-loading-system">
+<h2>1.3 <tt class="docutils literal"><span class="pre">ReactorBattery</span></tt> - Plugin loading system<a class="headerlink" href="#reactorbattery-plugin-loading-system" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="reactorbattery"></span><dl class="class">
+<dt id="reflex.control.ReactorBattery">
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">ReactorBattery</tt><big>(</big><em>output=&lt;function writeout at 0x02B17C30&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorBattery" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Reactor Battery provides a simple way to load
 all rectors stored inside a given package.</p>
 <p>This can be used as the basis for an extension system in an application,
 if implemented properly. To use the class, create an instance of the
@@ -243,18 +288,18 @@ and the plugin classes were called <tt class="docutils literal"><span class="pre
 do something similar to the following to load the plugins:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plugins</span>
 <span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
-<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">ReactorPlatform</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">ReactorBattery</span>
 
 <span class="c"># Create an event manager.</span>
 <span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
 
-<span class="c"># Create a platform.</span>
-<span class="n">platform</span> <span class="o">=</span> <span class="n">ReactorPlatform</span><span class="p">()</span>
+<span class="c"># Create a battery.</span>
+<span class="n">battery</span> <span class="o">=</span> <span class="n">ReactorBattery</span><span class="p">()</span>
 <span class="c"># Load our plugins.</span>
-<span class="n">platform</span><span class="o">.</span><span class="n">load_reactors</span><span class="p">(</span><span class="n">plugins</span><span class="p">,</span> <span class="s">&#39;Plugin&#39;</span><span class="p">,</span> <span class="n">events</span><span class="p">)</span>
+<span class="n">battery</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">plugins</span><span class="p">,</span> <span class="s">&#39;Plugin&#39;</span><span class="p">,)</span>
 
 <span class="c"># Plugins can now be accessed as such:</span>
-<span class="c">#   platform.loaded[plugin_name]</span>
+<span class="c">#   battery.loaded[plugin_name]</span>
 <span class="c"># Easy as pie!</span>
 </pre></div>
 </div>
@@ -262,26 +307,81 @@ do something similar to the following to load the plugins:</p>
 extension or plugin system, but the above provides a solid base for any
 system you can think up. Or it could be terrible.</p>
 <dl class="method">
-<dt id="reflex.control.ReactorPlatform.init">
-<tt class="descname">init</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform.init" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a do-nothing method.</p>
-<p>If you are extending this class and want to perform operations when
-an instance of the class is made, override this method. This method
-is called by <tt class="docutils literal"><span class="pre">__init__()</span></tt>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="reflex.control.ReactorPlatform.load_reactors">
-<tt class="descname">load_reactors</tt><big>(</big><em>rPackage</em>, <em>cls='Reactor'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorPlatform.load_reactors" title="Permalink to this definition">¶</a></dt>
+<dt id="reflex.control.ReactorBattery.load_objects">
+<tt class="descname">load_objects</tt><big>(</big><em>manager</em>, <em>package</em>, <em>cls='Reactor'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.ReactorBattery.load_objects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads all reactors from a given package.</p>
 <p>Input parameters:</p>
 <ul class="simple">
-<li><em>module</em> <strong>rPackage</strong> - The package from which to load modules and
+<li><em>:ref:`reflex.control.EventManager &lt;eventmanager&gt;`</em> <strong>manager</strong> -
+A reference to an EventManager object. Reactors are given this
+reference so that they can create event bindings.</li>
+<li><em>package</em> <strong>package</strong> - The package from which to load modules and
 their Reactor classes, depending on if they have any.</li>
 <li><em>str</em> <strong>cls</strong> - The name of the class to look for in each module
-within the package defined in <tt class="docutils literal"><span class="pre">rPackage</span></tt>.</li>
+within the package defined in <tt class="docutils literal"><span class="pre">package</span></tt>.</li>
 </ul>
 <p>Any extra arguments are passed to the Reactor classes on
+instantiation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rulesetbattery-ruleset-loading-system">
+<h2>1.4 <tt class="docutils literal"><span class="pre">RulesetBattery</span></tt> - Ruleset loading system<a class="headerlink" href="#rulesetbattery-ruleset-loading-system" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="rulesetbattery"></span><dl class="class">
+<dt id="reflex.control.RulesetBattery">
+<em class="property">class </em><tt class="descclassname">reflex.control.</tt><tt class="descname">RulesetBattery</tt><big>(</big><em>output=&lt;function writeout at 0x02B17C30&gt;</em>, <em>debug=False</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.RulesetBattery" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Ruleset Battery provides a simple way to load
+all rulesets stored inside a given package.</p>
+<p>Use this in conjunction with the ReactorBattery to create a richer
+plugin system. Rulesets allow greater control over how your system
+handles specific events. Below is a simple example of how to use the
+Ruleset Battery:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">plugins</span>
+<span class="kn">import</span> <span class="nn">rules</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">ReactorBattery</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">RulesetBattery</span>
+
+<span class="c"># Create an event manager.</span>
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+
+<span class="c"># Create a ruleset battery.</span>
+<span class="n">rulesets</span> <span class="o">=</span> <span class="n">RulesetBattery</span><span class="p">()</span>
+<span class="c"># Load our rulesets.</span>
+<span class="n">rulesets</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">rules</span><span class="p">)</span>
+<span class="c"># All rulesets in the rules package should now be loaded</span>
+<span class="c"># and registered with the event manager.</span>
+
+<span class="c"># Create a reactor battery.</span>
+<span class="n">plugin</span> <span class="o">=</span> <span class="n">ReactorBattery</span><span class="p">()</span>
+<span class="c"># Load our plugins.</span>
+<span class="n">plugin</span><span class="o">.</span><span class="n">load_objects</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">plugins</span><span class="p">,</span> <span class="s">&#39;Plugin&#39;</span><span class="p">)</span>
+
+<span class="c"># Plugins can now be accessed as such:</span>
+<span class="c">#   plugin.loaded[plugin_name]</span>
+<span class="c"># Easy as pie!</span>
+</pre></div>
+</div>
+<p>Quite simple, really. It takes more than that to fully implement an
+extension or plugin system, but the above provides a solid base for any
+system you can think up. Or it could be terrible.</p>
+<dl class="method">
+<dt id="reflex.control.RulesetBattery.load_objects">
+<tt class="descname">load_objects</tt><big>(</big><em>manager</em>, <em>package</em>, <em>cls='Ruleset'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#reflex.control.RulesetBattery.load_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all rulesets from a given package.</p>
+<p>Input parameters:</p>
+<ul class="simple">
+<li><em>:ref:`reflex.control.EventManager &lt;eventmanager&gt;`</em> <strong>manager</strong> -
+A reference to an EventManager object. This is used to define
+rules using the rulesets in the given package.</li>
+<li><em>package</em> <strong>package</strong> - The package from which to load modules and
+their Ruleset classes, depending on if they have any.</li>
+<li><em>str</em> <strong>cls</strong> - The name of the class to look for in each module
+within the package defined in <tt class="docutils literal"><span class="pre">package</span></tt>.</li>
+</ul>
+<p>Any extra arguments are passed to the Ruleset classes on
 instantiation.</p>
 </dd></dl>
 
@@ -300,7 +400,9 @@ instantiation.</p>
   <ul>
 <li><a class="reference internal" href="#">1. <tt class="docutils literal"><span class="pre">control</span></tt> module</a><ul>
 <li><a class="reference internal" href="#eventmanager-basic-event-management">1.1 <tt class="docutils literal"><span class="pre">EventManager</span></tt> - Basic event management</a></li>
-<li><a class="reference internal" href="#reactorplatform-plugin-loading-system">1.2 <tt class="docutils literal"><span class="pre">ReactorPlatform</span></tt> - Plugin loading system</a></li>
+<li><a class="reference internal" href="#packagebattery-package-loading-system">1.2 <tt class="docutils literal"><span class="pre">PackageBattery</span></tt> - Package loading system</a></li>
+<li><a class="reference internal" href="#reactorbattery-plugin-loading-system">1.3 <tt class="docutils literal"><span class="pre">ReactorBattery</span></tt> - Plugin loading system</a></li>
+<li><a class="reference internal" href="#rulesetbattery-ruleset-loading-system">1.4 <tt class="docutils literal"><span class="pre">RulesetBattery</span></tt> - Ruleset loading system</a></li>
 </ul>
 </li>
 </ul>
