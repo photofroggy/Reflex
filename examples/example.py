@@ -15,7 +15,7 @@
 import sys
 from reflex.data import Event
 from reflex.control import EventManager
-from reflex.interfaces import reactor
+from reflex.interfaces import Reactor
 
 class main:
     def __init__(self):
@@ -37,7 +37,7 @@ class main:
         self.load()
         self.events.trigger(Event('reloaded'))
     
-class example(reactor):
+class example(Reactor):
     
     name = 'example one'
     
@@ -52,7 +52,7 @@ class example(reactor):
     def e_reloaded(self, event):
         sys.stdout.write('<< Oh stop complaining, you fool.\n')
     
-class example2(reactor):
+class example2(Reactor):
     
     name = 'example two'
     

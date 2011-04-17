@@ -7,7 +7,7 @@
 # Reflex imports
 from reflex.data import Event
 from reflex.control import EventManager
-from reflex.interfaces import reactor
+from reflex.interfaces import Reactor
 # dAmnViper imports
 from dAmnViper.base import ReconnectingClient
 
@@ -48,7 +48,7 @@ class MyClient(ReconnectingClient):
     This is just a simple example of what can be done!
 '''
 
-class example(reactor):
+class example(Reactor):
     
     def init(self, dAmn):
         # Store these for easy reference!

@@ -1,7 +1,7 @@
 
 from reflex.data import Event
 from reflex.control import EventManager
-from reflex.interfaces import reactor
+from reflex.interfaces import Reactor
 
 # Create an event manager
 events = EventManager()
@@ -15,7 +15,7 @@ def example(event, *args):
 events.trigger(Event('basic'))
 
 # Odd test! Gets funky beyong this point.
-class exampler(reactor):
+class exampler(Reactor):
     
     name = 'Funky decorator hack'
     

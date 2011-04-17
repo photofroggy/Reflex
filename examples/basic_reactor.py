@@ -1,9 +1,9 @@
 
 from reflex.data import Event
 from reflex.control import EventManager
-from reflex.interfaces import reactor
+from reflex.interfaces import Reactor
 
-class example(reactor):
+class example(Reactor):
     
     name = 'example'
     

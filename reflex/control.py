@@ -57,7 +57,7 @@ class EventManager:
     class info:
         version = 1
         build = 6
-        stamp = '20022011-003204'
+        stamp = '17042011-042131'
         name = 'Cognition'
         state = 'Beta'
     
@@ -438,9 +438,7 @@ class RulesetBattery(PackageBattery):
             #   plugin.loaded[plugin_name]
             # Easy as pie!
         
-        Quite simple, really. It takes more than that to fully implement an
-        extension or plugin system, but the above provides a solid base for any
-        system you can think up. Or it could be terrible.
+        There. An easy way to make your plugin system more flexible!
     """
     
     def load_modules(self, package, required='Ruleset'):
