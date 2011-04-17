@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Basic Concepts &mdash; Reflex v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Reflex v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Reflex Concepts" href="index.html" />
+    <link rel="next" title="2. Batteries" href="battery.html" />
+    <link rel="prev" title="Reflex Concepts" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="battery.html" title="2. Batteries"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Reflex Concepts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reflex Concepts</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="basic-concepts">
+<h1>1. Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h1>
+<p>This page describes the core concepts and principles of Reflex individually.
+Other pages go into more detail about different concepts and how they are tied
+together.</p>
+<div class="section" id="events-and-the-event-manager">
+<h2>1.1. Events and the Event Manager<a class="headerlink" href="#events-and-the-event-manager" title="Permalink to this headline">¶</a></h2>
+<p id="basics-events"><em>This section refers to the</em> <a class="reference internal" href="../../reference/data.html#data-event"><em>Event</em></a> <em>and</em>
+<a class="reference internal" href="../../reference/control.html#eventmanager"><em>EventManager</em></a> <em>objects.</em></p>
+<p>An event system is a system where different events are processed by different
+handlers. It is up to the event system to invoke handlers when an event happens.
+Handlers that listen for a certain event in the system, are bound to that event.</p>
+<p>In Reflex, events are represented by the <a class="reference internal" href="../../reference/data.html#data-event"><em>Event object</em></a>, and
+the <a class="reference internal" href="../../reference/control.html#eventmanager"><em>EventManager object</em></a> invokes the handlers for those
+events.</p>
+<p>The event manager can also be used to create <a class="reference internal" href="#basics-bindings"><em>event bindings</em></a>. In fact, event bindings need to be created in order for
+the event manager to actually do anything when an event happens.</p>
+</div>
+<div class="section" id="event-handlers">
+<h2>1.2. Event Handlers<a class="headerlink" href="#event-handlers" title="Permalink to this headline">¶</a></h2>
+<p id="basics-handlers">Handlers are callable objects that are used to handle specific events when they
+happen. Applications may use plugins with handlers so that the plugins <em>react</em>
+to events that happen in the application.</p>
+</div>
+<div class="section" id="event-bindings">
+<h2>1.3. Event Bindings<a class="headerlink" href="#event-bindings" title="Permalink to this headline">¶</a></h2>
+<p id="basics-bindings">Bindings are objects which represent the link between a specific event handler
+and a specific event. The <a class="reference internal" href="../../reference/data.html#data-binding"><em>Binding object</em></a> stores a
+reference to an event handler and relating to the conditions under which the
+handler is invoked.</p>
+<p>The object stores the name of the event, or the type of the event, that the
+event handler is supposed to process. The binding also stores the <a class="reference internal" href="#basics-rules"><em>rules</em></a> associated with it.</p>
+</div>
+<div class="section" id="reactors">
+<h2>1.4. Reactors<a class="headerlink" href="#reactors" title="Permalink to this headline">¶</a></h2>
+<p id="basics-reactors">Reflex provides a base for Reactors, which are objects containing a selection of
+handlers. Reactors are also given a basic interface for creating and removing
+event bindings.</p>
+</div>
+<div class="section" id="rulesets">
+<h2>1.5. Rulesets<a class="headerlink" href="#rulesets" title="Permalink to this headline">¶</a></h2>
+<p id="basics-rulesets">Rulesets are classes that manipulate the bahviour of the event system when
+event bindings are created and removed, and when events happen. The default
+Ruleset does not alter the behaviour of the event system much, and is used for
+events which do not have a specific Ruleset defined for them.</p>
+</div>
+<div class="section" id="event-rules">
+<h2>1.6. Event Rules<a class="headerlink" href="#event-rules" title="Permalink to this headline">¶</a></h2>
+<p id="basics-rules">Event Rules are conditions associated with a specific event binding. These rules
+are stored as a list of items.</p>
+<p>When an event is being processed by the event system, if the event binding is
+one associated with the event being processed, the rules are checked by the
+system before invoking the handler. If the items in the rules list of the event
+binding match corresponding items associated with the event being processed,
+then the handler is called.</p>
+<p>The event rules are also referred to as event options.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Basic Concepts</a><ul>
+<li><a class="reference internal" href="#events-and-the-event-manager">1.1. Events and the Event Manager</a></li>
+<li><a class="reference internal" href="#event-handlers">1.2. Event Handlers</a></li>
+<li><a class="reference internal" href="#event-bindings">1.3. Event Bindings</a></li>
+<li><a class="reference internal" href="#reactors">1.4. Reactors</a></li>
+<li><a class="reference internal" href="#rulesets">1.5. Rulesets</a></li>
+<li><a class="reference internal" href="#event-rules">1.6. Event Rules</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Reflex Concepts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="battery.html"
+                        title="next chapter">2. Batteries</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/help/concepts/basic.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="battery.html" title="2. Batteries"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Reflex Concepts"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.5 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reflex Concepts</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, photofroggy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
