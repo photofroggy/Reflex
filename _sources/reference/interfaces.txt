@@ -5,11 +5,15 @@ The interfaces module contains classes providing different interfaces for differ
 
 3.1. ``Ruleset`` - Binding management
 --------------------------------------
+.. _i-ruleset:
+
 .. autoclass:: reflex.interfaces.Ruleset
     :members:
 
 3.2. ``Reactor`` - Base for reactive classes
 ---------------------------------------------
+.. _i-reactor:
+
 .. autoclass:: reflex.interfaces.Reactor
     :members:
 
