@@ -4,9 +4,9 @@
     This unittest tests Reactor subclassing.
 '''
 
+import sys
 import unittest
 # reflex imports
-from reflex.data import Event
 from reflex.control import EventManager
 from reflex.control import ReactorBattery
 from reflex.control import RulesetBattery
@@ -14,6 +14,8 @@ from reflex.control import RulesetBattery
 from reflex.test import rules
 from reflex.test import reactors
 
+def debug(message=''):
+    sys.stdout.write('{0}\n'.format(message))
 
 class TestReactorBattery(unittest.TestCase):
     
@@ -23,6 +25,8 @@ class TestReactorBattery(unittest.TestCase):
     def test_loading_reactors(self):
         # Test loading reactors into a battery.
         print('')
+        # Add `stddebug=debug` to the constructors here to see debug messages
+        # during the tests.
         good_battery = ReactorBattery()
         bad_battery = ReactorBattery()
         
@@ -44,6 +48,8 @@ class TestRulesetBattery(unittest.TestCase):
     def test_loading_rulesets(self):
         # Test loading rulesets into a battery.
         print('')
+        # Add `stddebug=debug` to the constructors here to see debug messages
+        # during the tests.
         good_battery = RulesetBattery()
         bad_battery = RulesetBattery()
         

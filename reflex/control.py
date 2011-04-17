@@ -56,8 +56,8 @@ class EventManager:
     
     class info:
         version = 1
-        build = 6
-        stamp = '17042011-042131'
+        build = 7
+        stamp = '17042011-112220'
         name = 'Cognition'
         state = 'Beta'
     
@@ -256,11 +256,23 @@ class PackageBattery:
         
         This functionality is used by the ``ReactorBattery`` and the
         ``RulesetBattery`` in Reflex.
+        
+        Input Parameters:
+        
+        * *callable* **stdout** - Reference to a method that displays output on
+          screen. This should be a method which displays normal messages that
+          this object tries to display on-screen.
+        * *callable* **stddebug** - Similar to ``stdout``, this is a method used
+          by the object to display output, but this method is used to display
+          debug messages, so should the method provided should only actually
+          show the messages given to it when the application is running in debug
+          mode.
+        
     """
 
-    def __init__(self, output=writeout, debug=False, *args, **kwargs):
-        self.log = output
-        self.debug = debug
+    def __init__(self, stdout=writeout, stddebug=(lambda n: None), *args, **kwargs):
+        self.log = stdout
+        self.debug = stddebug
         self.modules = {}
         self.loaded = {}
         self.init(*args, **kwargs)
@@ -275,19 +287,16 @@ class PackageBattery:
         pass
     
     def load_modules(self, package, required='ClassName'):
-        if self.debug:
-            self.log('** Checking modules in the {0} package.'.format(package.__name__))
+        self.debug('** Checking modules in the {0} package.'.format(package.__name__))
         modules = {}
         walker = pkgutil.walk_packages(package.__path__, package.__name__ + '.')
         for tup in walker:
             name = tup[1]
             
-            if self.debug:
-                self.log('** Found module \'{0}\'.'.format(name))
+            self.debug('** Found module \'{0}\'.'.format(name))
                 
             if name in self.modules.keys():
-                if self.debug:
-                    self.log('** Previously loaded module. Reloading!')
+                self.debug('** Previously loaded module. Reloading!')
                 imp.reload(self.modules[name])
                 modules[name] = self.modules[name]
                 continue
@@ -296,9 +305,8 @@ class PackageBattery:
             mod = loader.load_module(name)
             
             if not hasattr(mod, required):
-                if self.debug:
-                    self.log('>> Ignoring module {0}.'.format(name))
-                    self.log('>> Module contains no {0} class.'.format(required))
+                self.debug('>> Ignoring module {0}.'.format(name))
+                self.debug('>> Module contains no {0} class.'.format(required))
                 continue
             
             modules[name] = mod
@@ -334,8 +342,7 @@ class PackageBattery:
                 for line in tb:
                     self.log('>> {0}'.format(line))
         
-        if self.debug:
-            self.log('** Loaded {0}s: {1}'.format(cls.lower(), ', '.join(self.loaded.keys())))
+        self.debug('** Loaded {0}s: {1}'.format(cls.lower(), ', '.join(self.loaded.keys())))
         
     def load_object(self, manager, module, cls, *args, **kwargs):
         """ Load a single object from a single class. """
