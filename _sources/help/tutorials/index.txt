@@ -11,7 +11,7 @@ to understand how to use it.
 **Tutorials:**
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 5
     
     basic
     reactors

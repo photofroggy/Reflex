@@ -57,20 +57,19 @@
 <h2>3.1. <tt class="docutils literal"><span class="pre">Ruleset</span></tt> - Binding management<a class="headerlink" href="#ruleset-binding-management" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="i-ruleset"></span><dl class="class">
 <dt id="reflex.interfaces.Ruleset">
-<em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">Ruleset</tt><big>(</big><em>args</em>, <em>mapref</em>, <em>output</em>, <em>debug</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.interfaces.</tt><tt class="descname">Ruleset</tt><big>(</big><em>args</em>, <em>mapref</em>, <em>stdout</em>, <em>stddebug</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Ruleset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default Ruleset.</p>
 <p>Input parameters:</p>
 <ul class="simple">
 <li><em>args</em> - Any arguments passed to the
 <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object when the instance
 is created.</li>
-<li><strong>mapref</strong> - A reference to the dictionary storing all of the
+<li><em>dict</em> <strong>mapref</strong> - A reference to the dictionary storing all of the
 event bindings stored in the system.</li>
-<li><strong>output</strong> - A reference to the method being used to write
+<li><em>callable</em> <strong>stdout</strong> - A reference to the method being used to write
 output to the screen. This is given by the <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object.</li>
-<li><strong>debug</strong> - Boolean defining whether or not the application is
-running in debug mode. This may be useful for some
-applications.</li>
+<li><em>callable</em> <strong>stddebug</strong> - A reference to the method being used to write
+debug messages to the screen. This is given by the <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object.</li>
 </ul>
 <p>The Ruleset object provides an interface for managing bindings
 and events on a per-event basis. One Ruleset is assigned to <em>one</em>
@@ -125,7 +124,7 @@ manager&#8217;s</em></a> <tt class="docutils literal"><span class="pre">trigger(
 <dd><p>Set the reference for the event map.</p>
 <p>Input parameters:</p>
 <ul class="simple">
-<li><strong>mapref</strong> - As in the <tt class="docutils literal"><span class="pre">__init__()</span></tt> method, this
+<li><em>dict</em> <strong>mapref</strong> - As in the <tt class="docutils literal"><span class="pre">__init__()</span></tt> method, this
 parameter is a reference to the dictionary storing all of
 the event bindings being stored in the event system.</li>
 </ul>
@@ -182,7 +181,7 @@ to the tutorials.</p>
 <dl class="method">
 <dt id="reflex.interfaces.Reactor.bind">
 <tt class="descname">bind</tt><big>(</big><em>method</em>, <em>event</em>, <em>options=None</em>, <em>*additional</em><big>)</big><a class="headerlink" href="#reflex.interfaces.Reactor.bind" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a wrapper for <tt class="docutils literal"><span class="pre">reflex.control.EventManager().bind</span></tt></p>
+<dd><p>This is a wrapper for <a class="reference internal" href="control.html#reflex.control.EventManager.bind" title="reflex.control.EventManager.bind"><tt class="xref py py-meth docutils literal"><span class="pre">reflex.control.EventManager.bind()</span></tt></a></p>
 </dd></dl>
 
 <dl class="method">
