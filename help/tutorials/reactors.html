@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Reactors &mdash; Reflex v1.7 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Reflex v1.7 documentation" href="../../index.html" />
+    <link rel="up" title="Reflex Tutorials" href="index.html" />
+    <link rel="next" title="Reflex Concepts" href="../concepts/index.html" />
+    <link rel="prev" title="1. Basic usage" href="basic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../concepts/index.html" title="Reflex Concepts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="1. Basic usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.7 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reflex Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reactors">
+<h1>2. Reactors<a class="headerlink" href="#reactors" title="Permalink to this headline">¶</a></h1>
+<p>Reactors are objects containing one or more event handler. Reflex provides the
+base class <a class="reference internal" href="../../reference/interfaces.html#i-reactor"><em>reflex.interfaces.Reactor</em></a>, which provides a basic
+interface for binding, unbinding and triggering events.</p>
+<div class="section" id="creating-reactors">
+<h2>2.1. Creating Reactors<a class="headerlink" href="#creating-reactors" title="Permalink to this headline">¶</a></h2>
+<p>This section simply shows you how you should go about creating your own reactor
+classes using the Reactor base class.</p>
+<div class="section" id="making-the-class">
+<h3>2.1.1. Making The Class<a class="headerlink" href="#making-the-class" title="Permalink to this headline">¶</a></h3>
+<p>To be able to create your own reactors, you first need to import the base class
+from reflex&#8217;s interfaces module. You can do this however you want, but I prefer
+to use <tt class="docutils literal"><span class="pre">from</span> <span class="pre">reflex.interfaces</span> <span class="pre">import</span> <span class="pre">Reactor</span></tt>.</p>
+<p>The next step is to create a subclass of the Reactor class that you have
+imported. And that is it! This is all you need to actually create a reactor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.interfaces</span> <span class="kn">import</span> <span class="n">Reactor</span>
+
+<span class="k">class</span> <span class="nc">Plugin</span><span class="p">(</span><span class="n">Reactor</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Technically, that is a reactor, but it doesn&#8217;t do anything.</p>
+</div>
+<div class="section" id="startup-operations">
+<h3>2.1.2. Startup Operations<a class="headerlink" href="#startup-operations" title="Permalink to this headline">¶</a></h3>
+<p>The Reactor base class defines its own constructor, so if you need to do
+something when an instance of the reactor is created, you should override the
+<tt class="docutils literal"><span class="pre">init()</span></tt> method. The base class&#8217; constructor calls this method after
+performing its own operations.</p>
+<p>For example, if you want to alter the &#8220;name&#8221; of the reactor on instantiation,
+you should do the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.interfaces</span> <span class="kn">import</span> <span class="n">Reactor</span>
+
+<span class="k">class</span> <span class="nc">Plugin</span><span class="p">(</span><span class="n">Reactor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example Reactor&#39;</span>
+</pre></div>
+</div>
+<p>If you do not define the name yourself like this, then the reactor will
+automatically be assigned a name based on the file the reactor is stored in. For
+example, if your reactor is in the file <tt class="docutils literal"><span class="pre">example_file.py</span></tt>, then your reactor
+would be given the name <tt class="docutils literal"><span class="pre">'example</span> <span class="pre">file'</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="handling-events">
+<h2>2.2. Handling Events<a class="headerlink" href="#handling-events" title="Permalink to this headline">¶</a></h2>
+<p>There are several ways you can handle events, but you always need an event
+handler method, and you need to create an event binding for the handler and the
+event that it processes. You can do this using normal method calls, and
+decorators can be used.</p>
+<div class="section" id="a-standard-handler">
+<h3>2.2.1. A Standard Handler<a class="headerlink" href="#a-standard-handler" title="Permalink to this headline">¶</a></h3>
+<p>Event handlers are always expected to take an <a class="reference internal" href="../../reference/data.html#data-event"><em>Event object</em></a>
+as their first parameter. Keep that in mind when creating your event handlers.
+They should also be able to take any other arguments thrown at them. In most
+systems, you will not have to accommodate for this. Systems using Reflex may or
+may not give extra parameters to event handlers, but if they do, they should
+always give the same number of parameters to every event handler.</p>
+<p>You can also use any kind of callable as an event handler, but for now, we will
+be using a standard object method. Below is a simple example of a handler that
+prints out the name of the event being handled:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">evt_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&#39;&gt;&gt; handling event &quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This is a trivial example, and is mainly here to show how you <em>should</em> define
+event handlers.</p>
+<p>If we add this into the object we had in the previous section, we get the
+following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.interfaces</span> <span class="kn">import</span> <span class="n">Reactor</span>
+
+<span class="k">class</span> <span class="nc">Plugin</span><span class="p">(</span><span class="n">Reactor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example Reactor&#39;</span>
+
+    <span class="k">def</span> <span class="nf">evt_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;&gt;&gt; handling event &quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Great! But the object still doesn&#8217;t really do anything yet. We need to bind the
+handler to an event.</p>
+</div>
+<div class="section" id="binding-an-event">
+<h3>2.2.2. Binding An Event<a class="headerlink" href="#binding-an-event" title="Permalink to this headline">¶</a></h3>
+<p>To bind an event on our reactor object, we can use the object&#8217;s own
+<a class="reference internal" href="../../reference/interfaces.html#reflex.interfaces.Reactor.bind" title="reflex.interfaces.Reactor.bind"><tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt></a> method to make sure our handler is
+called when a certain event occurs.</p>
+<div class="sidebar">
+<p class="first sidebar-title">Event Options</p>
+<p>When creating event bindings, you can pass a list of items to be used as
+<em>options</em> or <em>rules</em>. These are described <a class="reference internal" href="../concepts/basic.html#basics-rules"><em>here</em></a>, and
+more information on these will be available soon.</p>
+<p class="last">Despite their usefulness, they are too complicated to be included properly
+at such an early stage in the tutorials.</p>
+</div>
+<p>The most suitable way to bind events is in your reactor&#8217;s <tt class="docutils literal"><span class="pre">init()</span></tt> method.
+When creating the binding, you should provide a reference to the handler you
+are using, and the name of the event that you want the handler to handle. This
+is the bare minimum for binding an event properly. For this tutorial, we are
+going to use the event name <tt class="docutils literal"><span class="pre">&quot;example&quot;</span></tt>. To bind our handler to the
+<tt class="docutils literal"><span class="pre">example</span></tt> event, we need to do the following in our <tt class="docutils literal"><span class="pre">init()</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">bing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evt_handler</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Adding this gives us the following class code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.interfaces</span> <span class="kn">import</span> <span class="n">Reactor</span>
+
+<span class="k">class</span> <span class="nc">Plugin</span><span class="p">(</span><span class="n">Reactor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example Reactor&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evt_handler</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">evt_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;&gt;&gt; handling event &quot;{0}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Take the above code, and save it in a file called <tt class="docutils literal"><span class="pre">example.py</span></tt>. Make sure you
+either have Reflex installed in Python, or have a copy of the reflex package in
+the same folder. Next, I will show you how to actually use the class that has
+just been created.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-use-this">
+<h2>2.3. How do I use this?<a class="headerlink" href="#how-do-i-use-this" title="Permalink to this headline">¶</a></h2>
+<p>So, know you should know how to actually create a very basic reactor class, but
+how do you go about using it properly or even make it actually do something?
+The first thing needed is an <a class="reference internal" href="../../reference/control.html#reflex.control.EventManager" title="reflex.control.EventManager"><tt class="xref py py-class docutils literal"><span class="pre">EventManager</span> <span class="pre">object</span></tt></a>, which acts as the main application &#8220;pump&#8221; for
+events.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Event Manager keeps track of all <a class="reference internal" href="../../reference/data.html#data-binding"><em>event bindings</em></a> and
+the loaded <a class="reference internal" href="../../reference/interfaces.html#i-ruleset"><em>rulesets</em></a>.</p>
+</div>
+<p>The first thing we need to do, is import our required modules and classes, then
+create an instance of the Event Manager. Create a file <tt class="docutils literal"><span class="pre">main.py</span></tt> and type the
+following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This creates our Event Manager and stores it in the variable <tt class="docutils literal"><span class="pre">events</span></tt>. Now we
+need to load our reactor that we created in the previous section. To do that,
+we initialise the reactor with the Event Manager as the first parameter, as
+shown below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">example</span><span class="o">.</span><span class="n">Plugin</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But how do we actually trigger the <tt class="docutils literal"><span class="pre">example</span></tt> event? Well, to trigger any
+events, we need the <a class="reference internal" href="../../reference/data.html#reflex.data.Event" title="reflex.data.Event"><tt class="xref py py-class docutils literal"><span class="pre">Event</span> <span class="pre">class</span></tt></a>, which is
+contained inside the module <tt class="docutils literal"><span class="pre">reflex.data</span></tt>. Once we have that imported, we can
+trigger an event using the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">events</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>So, our full program code in <tt class="docutils literal"><span class="pre">main.py</span></tt> should look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.data</span> <span class="kn">import</span> <span class="n">Event</span>
+<span class="kn">from</span> <span class="nn">reflex.control</span> <span class="kn">import</span> <span class="n">EventManager</span>
+<span class="kn">import</span> <span class="nn">example</span>
+
+<span class="n">events</span> <span class="o">=</span> <span class="n">EventManager</span><span class="p">()</span>
+
+<span class="n">example</span><span class="o">.</span><span class="n">Plugin</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+
+<span class="n">events</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>And that&#8217;s it! Simple, right?</p>
+</div>
+<div class="section" id="how-is-this-useful-in-an-application">
+<h2>2.4. How is this useful in an application?<a class="headerlink" href="#how-is-this-useful-in-an-application" title="Permalink to this headline">¶</a></h2>
+<p>It might not be! Something completely different may be more suited to your
+application. Maybe you don&#8217;t even need an event system of any sort. This stuff
+does come in handy, however, if you want an event-driven application, or an
+event-driven plugin system.</p>
+<p>Reactors provide a simple way for plugins to interact with your application,
+depending on what resources you provide the application with, of course.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Reactors</a><ul>
+<li><a class="reference internal" href="#creating-reactors">2.1. Creating Reactors</a><ul>
+<li><a class="reference internal" href="#making-the-class">2.1.1. Making The Class</a></li>
+<li><a class="reference internal" href="#startup-operations">2.1.2. Startup Operations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#handling-events">2.2. Handling Events</a><ul>
+<li><a class="reference internal" href="#a-standard-handler">2.2.1. A Standard Handler</a></li>
+<li><a class="reference internal" href="#binding-an-event">2.2.2. Binding An Event</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-do-i-use-this">2.3. How do I use this?</a></li>
+<li><a class="reference internal" href="#how-is-this-useful-in-an-application">2.4. How is this useful in an application?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="basic.html"
+                        title="previous chapter">1. Basic usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../concepts/index.html"
+                        title="next chapter">Reflex Concepts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/help/tutorials/reactors.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../concepts/index.html" title="Reflex Concepts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="basic.html" title="1. Basic usage"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.7 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reflex Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, photofroggy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
