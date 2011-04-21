@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Reactors &mdash; Reflex v1.7 documentation</title>
+    <title>2. Reactors &mdash; Reflex v1.8 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.7',
+        VERSION:     '1.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Reflex v1.7 documentation" href="../../index.html" />
+    <link rel="top" title="Reflex v1.8 documentation" href="../../index.html" />
     <link rel="up" title="Reflex Tutorials" href="index.html" />
     <link rel="next" title="Reflex Concepts" href="../concepts/index.html" />
     <link rel="prev" title="1. Basic usage" href="basic.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="basic.html" title="1. Basic usage"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Reflex v1.7 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Reflex v1.8 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Reflex Tutorials</a> &raquo;</li> 
       </ul>
     </div>  
@@ -154,7 +154,7 @@ are using, and the name of the event that you want the handler to handle. This
 is the bare minimum for binding an event properly. For this tutorial, we are
 going to use the event name <tt class="docutils literal"><span class="pre">&quot;example&quot;</span></tt>. To bind our handler to the
 <tt class="docutils literal"><span class="pre">example</span></tt> event, we need to do the following in our <tt class="docutils literal"><span class="pre">init()</span></tt> method:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">bing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evt_handler</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evt_handler</span><span class="p">,</span> <span class="s">&#39;example&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Adding this gives us the following class code:</p>
@@ -178,7 +178,7 @@ just been created.</p>
 </div>
 <div class="section" id="how-do-i-use-this">
 <h2>2.3. How do I use this?<a class="headerlink" href="#how-do-i-use-this" title="Permalink to this headline">¶</a></h2>
-<p>So, know you should know how to actually create a very basic reactor class, but
+<p>So, now you should know how to actually create a very basic reactor class, but
 how do you go about using it properly or even make it actually do something?
 The first thing needed is an <a class="reference internal" href="../../reference/control.html#reflex.control.EventManager" title="reflex.control.EventManager"><tt class="xref py py-class docutils literal"><span class="pre">EventManager</span> <span class="pre">object</span></tt></a>, which acts as the main application &#8220;pump&#8221; for
 events.</p>
@@ -300,7 +300,7 @@ depending on what resources you provide the application with, of course.</p>
         <li class="right" >
           <a href="basic.html" title="1. Basic usage"
              >previous</a> |</li>
-        <li><a href="../../index.html">Reflex v1.7 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Reflex v1.8 documentation</a> &raquo;</li>
           <li><a href="index.html" >Reflex Tutorials</a> &raquo;</li> 
       </ul>
     </div>

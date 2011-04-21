@@ -15,5 +15,6 @@ to understand how to use it.
     
     basic
     reactors
-    conditions
-    extendability
+
+.. conditions
+   extendability
