@@ -24,11 +24,11 @@ class TestReactorBattery(unittest.TestCase):
     
     def test_loading_reactors(self):
         # Test loading reactors into a battery.
-        print('')
+        sys.stdout.write('\n')
         # Add `stddebug=debug` to the constructors here to see debug messages
         # during the tests.
-        good_battery = ReactorBattery()
-        bad_battery = ReactorBattery()
+        good_battery = ReactorBattery(lambda n: None)
+        bad_battery = ReactorBattery(lambda n: None)
         
         # This should fail
         bad_battery.load_objects(self.events, reactors, 'Extension')
@@ -47,11 +47,11 @@ class TestRulesetBattery(unittest.TestCase):
     
     def test_loading_rulesets(self):
         # Test loading rulesets into a battery.
-        print('')
+        sys.stdout.write('\n')
         # Add `stddebug=debug` to the constructors here to see debug messages
         # during the tests.
-        good_battery = RulesetBattery()
-        bad_battery = RulesetBattery()
+        good_battery = RulesetBattery(lambda n: None)
+        bad_battery = RulesetBattery(lambda n: None)
         
         # This should fail
         bad_battery.load_objects(self.events, rules, 'Wrong')

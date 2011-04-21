@@ -8,36 +8,14 @@ import unittest
 # reflex imports
 from reflex.data import Event
 from reflex.control import EventManager
-from reflex.interfaces import Reactor
-
-class MyReactor(Reactor):
-    
-    def init(self):
-        # Test flag
-        self.handled = False
-        
-        # Create some event bindings.
-        self.bind(self.evt_handler, 'basic')
-        self.bind(self.evt_handler, 'conditional', [1])
-        self.bind(self.evt_handler, 'ignored', [None, 1])
-        
-        # Create decorated event handler
-        @self.handler('decorated')
-        def handler(event):
-            self.handled = True
-    
-    def reset(self):
-        self.handled = False
-    
-    def evt_handler(self, event):
-        self.handled = True
-
+# plugin reactor
+from reflex.test.reactors import Example
 
 class TestReactor(unittest.TestCase):
     
     def setUp(self):
         self.events = EventManager()
-        self.reactor = MyReactor(self.events)
+        self.reactor = Example.Plugin(self.events)
     
     def test_basic_event(self):
         # Test a basic event
@@ -84,7 +62,7 @@ class TestReactor(unittest.TestCase):
         self.reactor.reset()
     
     def test_decorated_event(self):
-        # Test an decorated event
+        # Test a decorated event
         
         # Should be false.
         self.events.trigger(Event('something'))

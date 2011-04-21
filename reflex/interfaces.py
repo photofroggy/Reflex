@@ -74,7 +74,10 @@ class Reactor:
         pass
         
     def bind(self, method, event, options=None, *additional):
-        """ This is a wrapper for ``reflex.control.EventManager().bind`` """
+        """ This is a wrapper for :py:meth:`reflex.control.EventManager.bind`.
+            The ``name`` attribute of this object is used as the binding
+            ``source``.
+        """
         return self._bind(self.name, method, event, options, *additional)
     
     def unbind(self, method, event, options=None):
@@ -99,14 +102,14 @@ class Ruleset:
         * *args* - Any arguments passed to the
           :ref:`event manager <eventmanager>` object when the instance
           is created.
-        * **mapref** - A reference to the dictionary storing all of the
+        * *dict* **mapref** - A reference to the dictionary storing all of the
           event bindings stored in the system.
-        * **output** - A reference to the method being used to write
+        * *callable* **stdout** - A reference to the method being used to write
           output to the screen. This is given by the :ref:`event manager
           <eventmanager>` object.
-        * **debug** - Boolean defining whether or not the application is
-          running in debug mode. This may be useful for some
-          applications.
+        * *callable* **stddebug** - A reference to the method being used to write
+          debug messages to the screen. This is given by the :ref:`event manager
+          <eventmanager>` object.
         
         The Ruleset object provides an interface for managing bindings
         and events on a per-event basis. One Ruleset is assigned to *one*
@@ -116,10 +119,10 @@ class Ruleset:
         a specific ruleset assigned to them.
     """
 
-    def __init__(self, args, mapref, output, debug):
+    def __init__(self, args, mapref, stdout, stddebug):
         self.mapref = mapref
-        self._write = output
-        self.debug = debug
+        self._write = stdout
+        self.debug = stddebug
         
         self.init(*args)
     
@@ -139,7 +142,7 @@ class Ruleset:
             
             Input parameters:
             
-            * **mapref** - As in the ``__init__()`` method, this
+            * *dict* **mapref** - As in the ``__init__()`` method, this
               parameter is a reference to the dictionary storing all of
               the event bindings being stored in the event system.
             

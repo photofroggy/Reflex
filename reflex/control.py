@@ -52,25 +52,38 @@ class EventManager:
         
         The above example does not show the full power of the system. View
         the tutorials to get a better idea of how things can be used.
+        
+        Input Parameters:
+        
+        * *callable* **stdout** - A reference to the method being used to write
+          output to the screen. If ``None`` is given, a simple method that
+          prints the message with a newline is used.
+        * *callable* **stddebug** - A reference to the method being used to
+          write debug messages to the screen. If ``None`` is given, a do-nothing
+          method is used.
+        * **args** and **kwargs** - Additional arguments can be passed here. These
+          arguments will be passed to the ``init()`` method. Child classes
+          should override the ``init()`` method to make use of any extra
+          parameters passed to the constructor.
     """
     
     class info:
         version = 1
-        build = 7
-        stamp = '17042011-112220'
-        name = 'Cognition'
-        state = 'Beta'
+        build = 8
+        stamp = '21042011-172728'
+        name = 'Charged'
+        state = 'RC'
     
-    def __init__(self, output=writeout, debug=False, *args, **kwargs):
-        self._write = output
-        self.debug = debug
+    def __init__(self, stdout=None, stddebug=None, *args, **kwargs):
+        self._write = stdout or writeout
+        self.debug = stddebug or (lambda n: None)
         self._rules = Ruleset
         self.map = {}
         self.rules = {}
-        self.init(*args)
+        self.init(*args, **kwargs)
         self.default_ruleset(*args)
     
-    def init(self, *args):
+    def init(self, *args, **kwargs):
         """ This method is called by ``__init__``.
             
             On its own, it doesn't do anything. This is designed as a
@@ -261,18 +274,19 @@ class PackageBattery:
         
         * *callable* **stdout** - Reference to a method that displays output on
           screen. This should be a method which displays normal messages that
-          this object tries to display on-screen.
+          this object tries to display on-screen. By default this is a method
+          which simply writes the output to stdout with a newline appended.
         * *callable* **stddebug** - Similar to ``stdout``, this is a method used
           by the object to display output, but this method is used to display
-          debug messages, so should the method provided should only actually
-          show the messages given to it when the application is running in debug
-          mode.
+          debug messages, so the method provided should only actually show the
+          messages given to it when the application is running in debug mode. By
+          default this is a do-nothing lambda.
         
     """
 
-    def __init__(self, stdout=writeout, stddebug=(lambda n: None), *args, **kwargs):
-        self.log = stdout
-        self.debug = stddebug
+    def __init__(self, stdout=None, stddebug=None, *args, **kwargs):
+        self.log = stdout or writeout
+        self.debug = stddebug or (lambda n: None)
         self.modules = {}
         self.loaded = {}
         self.init(*args, **kwargs)
@@ -317,7 +331,7 @@ class PackageBattery:
             
             Input parameters:
             
-            * *:ref:`reflex.control.EventManager <eventmanager>`* **manager** -
+            * :ref:`reflex.control.EventManager <eventmanager>` **manager** -
               A reference to an EventManager object.
             * *package* **package** - The package from which to load modules and
               their objects, depending on if they have any.
@@ -456,7 +470,7 @@ class RulesetBattery(PackageBattery):
             
             Input parameters:
             
-            * *:ref:`reflex.control.EventManager <eventmanager>`* **manager** -
+            * :ref:`reflex.control.EventManager <eventmanager>` **manager** -
               A reference to an EventManager object. This is used to define
               rules using the rulesets in the given package.
             * *package* **package** - The package from which to load modules and
