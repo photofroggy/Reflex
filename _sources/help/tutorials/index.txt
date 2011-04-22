@@ -15,6 +15,7 @@ to understand how to use it.
     
     basic
     reactors
+    events
 
 .. conditions
    extendability

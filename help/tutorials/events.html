@@ -1,0 +1,214 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Events - A short guide &mdash; Reflex v1.8 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Reflex v1.8 documentation" href="../../index.html" />
+    <link rel="up" title="Reflex Tutorials" href="index.html" />
+    <link rel="next" title="Reflex Concepts" href="../concepts/index.html" />
+    <link rel="prev" title="2. Reactors" href="reactors.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../concepts/index.html" title="Reflex Concepts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reactors.html" title="2. Reactors"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reflex Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="events-a-short-guide">
+<h1>3. Events - A short guide<a class="headerlink" href="#events-a-short-guide" title="Permalink to this headline">¶</a></h1>
+<p>As you may have guessed, Reflex is an Event system. This can mean different
+things to different people. This page aims to explain what events are, how they
+can be used, and how they are used within Reflex.</p>
+<div class="section" id="what-are-events">
+<h2>3.1. What Are Events?<a class="headerlink" href="#what-are-events" title="Permalink to this headline">¶</a></h2>
+<p>An event is something that happens. Which is obvious. How about we delve deeper
+into what events are in an application.</p>
+<p>Lets say someone walks into a shop. That person entering that shop is an event.
+In an application, events can happen. If the application receives some data from
+an internet connection, then an event has happened. Just as other people will
+know that someone has just entered a shop, the application knows it just
+received some data.</p>
+<p>When we see someone enter a shop, we can tell other people that someone entered
+the shop. Applications might want to tell their plugins that an event has just
+happened. An application might want to tell their plugins that some data was
+just received over the internet. Applications can do this using an event system
+like reflex.</p>
+<p>In applications, events can be represented by objects storing information about
+the event. Passing this object on to plugins allows plugins to act on events
+appropriately.</p>
+</div>
+<div class="section" id="event-data">
+<h2>3.2. Event Data<a class="headerlink" href="#event-data" title="Permalink to this headline">¶</a></h2>
+<p>When an event happens, there is usually information related to that event. For
+instance, when someone enters a shop, they entered that shop at a specific time.
+The time could be considered information related to the event.</p>
+<p>In an application receiving data over an internet connection, they are receiving
+data from a specific address. This could be considered relevant, and the
+information may be required for some plugins.</p>
+<p>Data associated with events can be stored as attributes of an object
+representing the event. In Reflex, this is how events can be represented:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">reflex.data</span> <span class="kn">import</span> <span class="n">Event</span>
+
+<span class="c"># Create a new Event object</span>
+<span class="n">evt</span> <span class="o">=</span> <span class="n">Event</span><span class="p">(</span><span class="s">&#39;data_received&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;url&#39;</span><span class="p">,</span> <span class="s">&#39;google.com&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;insert html here&#39;</span><span class="p">)])</span>
+<span class="c"># evt is now an object representing the event &#39;data_received&#39;. The object</span>
+<span class="c"># has the following attributes:</span>
+<span class="c">#</span>
+<span class="c">#   evt.name = &#39;data_received&#39;</span>
+<span class="c">#   evt.rules = [&#39;google.com&#39;, &#39;insert html here&#39;]</span>
+<span class="c">#   evt.url = &#39;google.com&#39;</span>
+<span class="c">#   evt.data = &#39;insert html here&#39;</span>
+<span class="c">#</span>
+<span class="c"># This data can be used in an application easily.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="event-rules-or-options">
+<h2>3.3. Event Rules or Options<a class="headerlink" href="#event-rules-or-options" title="Permalink to this headline">¶</a></h2>
+<p>If someone tried to enter a shop when it was closed, they would not be able to
+get in because the doors would not be open. The shops essentially reject
+customers if they try to enter at a time when the shop is closed. And remember,
+the time that a customer enters (or tries to enter) a shop is relevent data.
+This data is checked against the shop&#8217;s opening hours.</p>
+<p>Just as shops would want to reject customers based on the time, an applications
+plugins might want to only receive data from a certain web address. In order
+to do this, the plugin can provide the event system with a specific web address
+that it wants to listen to events for.</p>
+<p>When an event happens, the event system would then check the data associated
+with the event against the data provided by the plugins. If the data matches,
+then the plugin&#8217;s event handler is called.</p>
+</div>
+<div class="section" id="how-can-this-be-used">
+<h2>3.4. How Can This Be Used?<a class="headerlink" href="#how-can-this-be-used" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="first sidebar-title">Event Options</p>
+<p>Notice the list given as the third parameter for <tt class="docutils literal"><span class="pre">bind()</span></tt>? This is the
+list of <tt class="docutils literal"><span class="pre">event</span> <span class="pre">options</span></tt> or <tt class="docutils literal"><span class="pre">event</span> <span class="pre">rules</span></tt> that will be associated with
+the event binding created here.</p>
+<p class="last">If you look back to the code sample in <tt class="docutils literal"><span class="pre">section</span> <span class="pre">3.2.</span></tt>, you should notice
+that the <tt class="docutils literal"><span class="pre">rules</span></tt> attribute for the event object shown in this section
+consists of <tt class="docutils literal"><span class="pre">[doman,</span> <span class="pre">data]</span></tt> as given when constructing the object. These
+are the two lists that are compared by the event system.</p>
+</div>
+<p>To put this into a proper code example, say we have the event
+<tt class="docutils literal"><span class="pre">'data_received'</span></tt> signifying we have received data from a web address. We can
+create an event binding, and make sure that the handler is only called when data
+is received from <tt class="docutils literal"><span class="pre">'google.com'</span></tt>. To do this, you would use something similar
+to the code shown here:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_handler</span><span class="p">,</span> <span class="s">&#39;data_received&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;google.com&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Firing the event from inside the application may look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">manager</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">Event</span><span class="p">(</span><span class="s">&#39;data_received&#39;</span><span class="p">,</span>
+    <span class="p">[(</span><span class="s">&#39;address&#39;</span><span class="p">,</span> <span class="n">domain</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)]))</span>
+</pre></div>
+</div>
+<p>So, if the domain sending the data to the application is the same as the domain
+defined when calling <tt class="docutils literal"><span class="pre">self.bind</span></tt>, then the object method <tt class="docutils literal"><span class="pre">self.my_handler</span></tt>
+is called with the object provided.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. Events - A short guide</a><ul>
+<li><a class="reference internal" href="#what-are-events">3.1. What Are Events?</a></li>
+<li><a class="reference internal" href="#event-data">3.2. Event Data</a></li>
+<li><a class="reference internal" href="#event-rules-or-options">3.3. Event Rules or Options</a></li>
+<li><a class="reference internal" href="#how-can-this-be-used">3.4. How Can This Be Used?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reactors.html"
+                        title="previous chapter">2. Reactors</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../concepts/index.html"
+                        title="next chapter">Reflex Concepts</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/help/tutorials/events.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../concepts/index.html" title="Reflex Concepts"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="reactors.html" title="2. Reactors"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Reflex v1.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reflex Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, photofroggy.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
