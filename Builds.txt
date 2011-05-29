@@ -8,9 +8,8 @@
         ** Just a build slave type thingy really. Dirty hack.
         * Moved example scripts to a different directory.
         * Changed base classes to extend `object`.
-        ** This properly adds support
-        for Python 2.7+.
-asdas
+        ** This properly adds support for Python 2.7+.
+
     Build 8 (21042011-172728) Charged
         * Created setup.py.
         * Replaced default callables with None.
