@@ -6,7 +6,7 @@
     Mainly just the Binding and Event classes!
 '''
 
-class Binding:
+class Binding(object):
     """ Event binding.
     
         Each instance represents a different binding. A binding stores
@@ -54,7 +54,7 @@ class Binding:
         """Overwrite this method when doing stuff on instantiation."""
         pass
 
-class Event:
+class Event(object):
     """ Event class.
         
         Instances of this class are used to represent events, and store

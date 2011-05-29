@@ -14,7 +14,7 @@ from collections import Callable
 # Custom
 from reflex.data import Binding
 
-class Reactor:
+class Reactor(object):
     """ Reactor base class.
         
         Input parameters:
@@ -92,7 +92,7 @@ class Reactor:
         return decorate
 
 
-class Ruleset:
+class Ruleset(object):
     """ Default Ruleset.
         
         Input parameters:

@@ -26,7 +26,7 @@ from reflex.interfaces import Ruleset
 def writeout(message=''):
     sys.stdout.write('{0}\n'.format(message))
 
-class EventManager:
+class EventManager(object):
     """ The EventManager class provides a simple way to manage
         events and their bindings. This is one of the main things
         that application developers should be interested in using.
@@ -260,7 +260,7 @@ class EventManager:
         return (wrapit(self.bind), wrapit(self.unbind))
 
 
-class PackageBattery:
+class PackageBattery(object):
     """ The Package Battery is the base class that provides
         the functionality of loading all modules within a given
         package, and according to certain conditions.

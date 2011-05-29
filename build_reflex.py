@@ -14,6 +14,7 @@ import sys
 import time
 import shutil
 import argparse
+import traceback
 import subprocess
 
 def writeout(message=''):
@@ -140,6 +141,10 @@ class Build:
             'Build {0} ({1})'.format(self.args.build, self.stamp[1]))
         
         if newd == data:
+            
+            if 'Build {0} ('.format(self.args.build) in newd:
+                return
+            
             writeout('>> Build {0} is not documented in the build list!'.format(
                 self.args.build))
             writeout('>> Make sure the changes in this build are listed.')
@@ -310,8 +315,7 @@ class Build:
         
         writeout('>> Building distribution...')
         
-        cmd = [sys.executable, 'setup.py', '-q', 'sdist', '--formats=gztar,zip',
-            '-d dist']
+        cmd = [sys.executable, 'setup.py', '-q', 'sdist', '--formats=gztar,zip']
         if self.args.upload:
             cmd.append('upload')
         
@@ -322,8 +326,15 @@ class Build:
             writeout('>> Exiting.')
             sys.exit(5)
         
-        subprocess.call(['cp', './dist/*', '../dist/'])
-        subprocess.call(['rm', '-r', '-f', './dist'])
+        try:
+            subprocess.call(['cp ./dist/* ../dist/'])
+            subprocess.call(['rm -r -f ./dist'])
+        except OSError as e:
+            writeout('>> Moving archives failed...')
+            writeout('>> Error:')
+            tb = traceback.format_exc().splitlines()
+            for line in tb:
+                writeout('>>> {0}'.format(line))
 
 
 if __name__ == '__main__':
