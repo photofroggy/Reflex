@@ -27,8 +27,8 @@ Downloads
 
 **Get stable releases of Reflex here:**
 
-* `Reflex 1 RC - Build 8
-  <https://github.com/downloads/photofroggy/Reflex/Reflex_1.8.zip>`_
+* `Reflex 1 RC - Build 9
+  <https://github.com/downloads/photofroggy/Reflex/Reflex_1.9.zip>`_
 * :doc:`more... <reflex_downloads>`
 
 **Get the bleeding edge builds of Reflex here:**
