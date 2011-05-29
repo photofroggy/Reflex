@@ -2,7 +2,7 @@
 Reflex
 ========
 
-reflex is an event system for python applications. Lol.
+reflex is an event system for python applications.
 
 The package, written for Python 3.1, provides a way for applications to manage events and event listeners, with little effort.
 
