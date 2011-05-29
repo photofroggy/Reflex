@@ -262,8 +262,8 @@ class Build:
             writeout('>> Exiting.')
             sys.exit(4)
         
-        subprocess.call(['cp', os.path.join(self.args.docdest, 'index.html'), './index.htmnl'])
-        subprocess.call(['cp', os.path.join(self.args.docdest, 'reflex_downloads.html'), './reflex_downloads.htmnl'])
+        subprocess.call(['cp', os.path.join(self.args.docdest, 'index.html'), './index.html'])
+        subprocess.call(['cp', os.path.join(self.args.docdest, 'reflex_downloads.html'), './reflex_downloads.html'])
     
     def push_changes(self):
         
