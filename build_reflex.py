@@ -327,8 +327,14 @@ class Build:
             sys.exit(5)
         
         try:
-            subprocess.call(['cp ./dist/* ../dist/'])
-            subprocess.call(['rm -r -f ./dist'])
+            files = ['Reflex-events-{0}.zip'.format(self.version),
+                'Reflex-events-{0}.tar.gz'.format(self.version)]
+            
+            for name in files:
+                shutil.copy('./dist/{0}'.format(name),
+                    '../dist/{0}'.format(name))
+            
+            subprocess.call(['rm', '-r', '-f', 'dist'])
         except OSError as e:
             writeout('>> Moving archives failed...')
             writeout('>> Error:')
