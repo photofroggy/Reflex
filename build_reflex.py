@@ -94,7 +94,7 @@ class Build:
             help='Do not modify setup.py during build process')
         
         parser.add_argument('-ds', '--docsource', dest='docsource',
-            action='store', default='./docs/source/', metavar='source_dir',
+            action='store', default='../docs/source/', metavar='source_dir',
             help='Define the source folder for the documentation')
         
         parser.add_argument('-dd', '--docdest', dest='docdest',
@@ -311,7 +311,7 @@ class Build:
         writeout('>> Building distribution...')
         
         cmd = [sys.executable, 'setup.py', '-q', 'sdist', '--formats=gztar,zip',
-            '-d', '../dist/']
+            '-d dist']
         if self.args.upload:
             cmd.append('upload')
         
@@ -322,6 +322,8 @@ class Build:
             writeout('>> Exiting.')
             sys.exit(5)
         
+        subprocess.call(['cp', './dist/*', '../dist/'])
+        subprocess.call(['rm', '-r', '-f', './dist'])
 
 
 if __name__ == '__main__':
