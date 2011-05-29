@@ -284,11 +284,11 @@ class Build:
         origd = os.getcwd()
         os.chdir(self.args.docdest)
         
-        self.commit()
+        self.commit('gh-pages')
         
         os.chdir(origd)
         
-    def commit(self):
+    def commit(self, branch='master'):
             
         ret = subprocess.call(['git', 'commit', '-a', '-m', '"Pushing build {0}"'.format(self.args.build)])
         
@@ -297,7 +297,7 @@ class Build:
             writeout('>>> Cancelling pushes...')
             return False
         
-        ret = subprocess.call(['git', 'push', 'origin', 'master'])
+        ret = subprocess.call(['git', 'push', 'origin', branch])
         
         if ret != 0:
             writeout('>>> Failed to push changes...')
