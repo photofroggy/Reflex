@@ -12,6 +12,7 @@
 import os
 import sys
 import time
+import json
 import shutil
 import argparse
 import traceback
@@ -19,6 +20,54 @@ import subprocess
 
 def writeout(message=''):
     sys.stdout.write('{0}\n'.format(message))
+
+def export_struct(data, depth=1):
+    """ This method returns a JSON object from a Python object.
+        The JSON object is formatted to make it easier to read.
+        Example: export_struct({'lol':[1,2]})
+            >>  {
+            >>      'lol': [
+            >>          1,
+            >>          2
+            >>      ]
+            >>  }
+    """
+    if isinstance(data, dict):
+        string  = '{'
+    elif isinstance(data, list) or isinstance(data, tuple):
+        string = '['
+    else:
+        return flatten_val(data)
+    for i in data:
+        if len(string) > 0 and string[-1] not in ('{', '(', '['):
+            string+= ','
+        string += '\n{0}'.format("    " * depth)
+        if isinstance(data, dict):
+            string += flatten_val(i)+' : '
+            use = data[i]
+        else:
+            use = i
+        if isinstance(use, str) or isinstance(use, int) or isinstance(use, float):
+            string += flatten_val(use)
+        else:
+            string += export_struct(use, depth+1)
+    if len(data) > 0: string += "\n"+("    "*(depth-1))
+    if isinstance(data, list) or isinstance(data, tuple):
+        string += ']'
+    elif isinstance(data, dict):
+        string += '}'
+    return string
+
+def flatten_val(value):
+    if not isinstance(value, str):
+        if value is None:
+            return 'null'
+        if value is True:
+            return 'true'
+        if value is False:
+            return 'false'
+        return str(value)
+    return '"{0}"'.format(str(value).replace('"', '\\"'))
 
 def clean_files(dirs=[], debug=None):
     """ Removes .pyc files from given directories. """
@@ -49,10 +98,30 @@ class Build:
     version = '1.n'
     series = 'Charged'
     
+    class conf:
+        name = None
+        
+        class version:
+            major = None
+            build = None
+            full = None
+            series = None
+        
+        pypi = None
+        
+        class doc:
+            source = None
+            dest = None
+            cf = None
+        
+        clean = None
+            
     def __init__(self):
+        self.load_config()
+        
         self.handle_args()
         
-        self.version = '{0}.{1}'.format(self.major, self.args.build)
+        self.version = '{0}.{1}'.format(self.conf.version.major, self.args.build)
         
         self.get_stamp()
         
@@ -72,15 +141,56 @@ class Build:
         
         writeout('>> Cleaning folders and files...')
         
-        clean_files([
-            '.', './reflex', './reflex/test',
-            './reflex/test/reactors', './reflex/test/rules',
-            './reflex/examples'],
-            writeout if self.args.verbose else None)
+        clean_files(self.conf.clean, writeout if self.args.verbose else None)
         
         self.distribute()
     
         writeout('>> Build {0} packaged and released'.format(self.args.build))
+        
+        self.save_config()
+    
+    def load_config(self):
+        conf = open('build.conf', 'r')
+        data = json.loads(conf.read())
+        conf.close()
+        
+        self.conf.name = data['name']
+        
+        self.conf.version.major = data['version']['major']
+        self.conf.version.build = data['version']['build']
+        self.conf.version.full = data['version']['full']
+        self.conf.version.series = data['version']['series']
+        
+        self.conf.pypi = data['pypi']
+        
+        self.conf.doc.source = data['doc']['source']
+        self.conf.doc.dest = data['doc']['dest']
+        self.conf.doc.cf = data['doc']['cf']
+        
+        self.conf.clean = data['clean']
+    
+    def save_config(self):
+        data = {
+            'name': self.conf.name,
+            'version': {
+                'major': self.conf.version.major,
+                'build': self.args.build,
+                'full': '{0}.{1}'.format(self.conf.version.major, self.args.build),
+                'series': self.conf.version.series
+            },
+            'pypi': self.conf.pypi,
+            'doc': {
+                'source': self.conf.doc.source,
+                'dest': self.conf.doc.dest,
+                'cf': self.conf.doc.cf
+            },
+            'clean': self.conf.clean
+        }
+        
+        conf = open('build.conf', 'w')
+        conf.write(export_struct(data))
+        conf.close()
+
 
     def handle_args(self):
         parser = argparse.ArgumentParser(
@@ -95,11 +205,11 @@ class Build:
             help='Do not modify setup.py during build process')
         
         parser.add_argument('-ds', '--docsource', dest='docsource',
-            action='store', default='../docs/source/', metavar='source_dir',
+            action='store', default=self.conf.doc.source, metavar='source_dir',
             help='Define the source folder for the documentation')
         
         parser.add_argument('-dd', '--docdest', dest='docdest',
-            action='store', default='../docs/Reflex/', metavar='destination',
+            action='store', default=self.conf.doc.dest, metavar='destination',
             help='Define the destination folder for the documentation')
         
         parser.add_argument('-D', '-nodocs', dest='doc',
@@ -133,6 +243,9 @@ class Build:
         self.stamp = (raw, time.strftime("%d%m%Y-%H%M%S", time.gmtime(raw)))
     
     def stamp_build_list(self):
+        if self.version == self.conf.version.full:
+            return
+        
         blist = open('./Builds.txt', 'r')
         data = blist.read()
         blist.close()
@@ -164,7 +277,7 @@ class Build:
         
         writeout('>> Attempting to modify setup.py...')
         
-        previous = '{0}.{1}'.format(self.major, self.args.build - 1)
+        previous = self.conf.version.full
         
         writeout('>> Assuming previous version is {0}...'.format(previous))
         
@@ -208,7 +321,7 @@ class Build:
         idata = indexf.read()
         indexf.close()
         
-        newid = idata.replace('Build {0}'.format(self.args.build - 1),
+        newid = idata.replace('Build {0}'.format(self.conf.version.build),
             'Build {0}'.format(self.args.build))
         
         if newid == idata:
@@ -216,7 +329,7 @@ class Build:
             writeout('>>> Previous build was not {0}.'.format(self.args.build))
             return
         
-        newid = newid.replace('Reflex_{0}.{1}'.format(self.major, self.args.build - 1),
+        newid = newid.replace('Reflex_{0}.{1}'.format(self.conf.version.full),
             'Reflex_{0}'.format(self.version))
         
         indexf = open(indexd, 'w')
@@ -262,8 +375,14 @@ class Build:
             writeout('>> Exiting.')
             sys.exit(4)
         
-        subprocess.call(['cp', os.path.join(self.args.docdest, 'index.html'), './index.html'])
-        subprocess.call(['cp', os.path.join(self.args.docdest, 'reflex_downloads.html'), './reflex_downloads.html'])
+        try:
+            for cf in self.conf.doc.cf:
+                subprocess.call(['cp', os.path.join(self.args.docdest, cf), './{0}'.format(cf)])
+        except Exception as e:
+            return
+        
+        self.conf.doc.source = self.args.docsource
+        self.conf.doc.dest = self.args.docdest
     
     def push_changes(self):
         
