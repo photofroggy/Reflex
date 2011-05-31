@@ -220,16 +220,16 @@ class Ruleset(object):
                 continue
             # Process event item i
             rule = rules[i]
-            if isinstance(option, str):
-                try:
-                    if str(rule).lower() == option.lower():
-                        continue
-                except Exception:
-                    return None
+            try:
+                if str(rule).lower() == str(option).lower():
+                    continue
+            except Exception:
+                return None
             if type(rule) != type(option):
                 return None
             if rule == option:
                 continue
+            print 'hey'
             return None
         try:
             return binding.call(data, *args)

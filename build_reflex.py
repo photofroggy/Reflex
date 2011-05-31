@@ -329,7 +329,7 @@ class Build:
             writeout('>>> Previous build was not {0}.'.format(self.args.build))
             return
         
-        newid = newid.replace('Reflex_{0}.{1}'.format(self.conf.version.full),
+        newid = newid.replace('Reflex_{0}'.format(self.conf.version.full),
             'Reflex_{0}'.format(self.version))
         
         indexf = open(indexd, 'w')
