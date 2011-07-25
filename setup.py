@@ -4,7 +4,7 @@
 from distutils.core import setup
 
 setup(name='Reflex-events',
-    version='1.10',
+    version='1.11',
     description='Event system for Python',
     author='photofroggy',
     author_email='froggywillneverdie@msn.com',
