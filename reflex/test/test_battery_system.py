@@ -23,17 +23,17 @@ class TestBatteryBasedSystem(unittest.TestCase):
         sys.stdout.write('\n')
         
         # Load an event system
-        events = EventManager(stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
+        events = EventManager() #stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
         
         # Load rulesets
-        rulesets = RulesetBattery(stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
+        rulesets = RulesetBattery() #stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
         rulesets.load_objects(events, rules)
         
         self.assertIsNotNone(events.rules.get('example', None),
             'Failed to load test ruleset')
         
         # Load plugins!
-        plugins = ReactorBattery(stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
+        plugins = ReactorBattery() #stddebug=lambda n: sys.stdout.write('{0}\n'.format(n)))
         plugins.load_objects(events, reactors, 'Plugin')
         
         self.assertIsNotNone(events.map.get('example', None),
@@ -42,7 +42,6 @@ class TestBatteryBasedSystem(unittest.TestCase):
         events.rules['example'].reset_called()
         
         # Fire an event!
-        sys.stdout.write('** Testing example event...\n')
         events.trigger(Event('example'))
         
         # Test Results!

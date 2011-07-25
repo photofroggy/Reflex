@@ -28,9 +28,9 @@ setup(name='Reflex-events',
         'Topic :: Software Development :: Libraries :: Application Frameworks'
     ],
     long_description="""
-**Reflex** is an event system for applications made using **Python 3**.
+**Reflex** is an event system for applications made using **Python**.
 
-The package, written for Python 3.2, provides a way for applications to manage events and event listeners, with little effort.
+The package provides a way for applications to manage events and event listeners, with little effort.
 
 While the system is somewhat more complex than existing event systems, I feel it is more flexible, and more powerful.
 
@@ -71,6 +71,7 @@ The purpose of this package is to make creating an event driven plugin system
 for your application an effortless task. A full plugin system can created in
 just a few lines, as shown here::
     
+    from reflex.data import Event
     from reflex.control import EventManager
     from reflex.control import ReactorBattery
     import plugins
@@ -81,10 +82,12 @@ just a few lines, as shown here::
     # Create a battery.
     battery = ReactorBattery()
     # Load our plugins.
-    battery.load_objects(events, plugins, 'Plugin',)
+    battery.load_objects(events, plugins, 'Plugin')
     
     # Plugins can now be accessed as such:
     #   battery.loaded[plugin_name]
+    # Events can be fired as follows:
+    #   events.trigger(Event('my event'))
     # Easy as pie!
     
 The above example assumes your plugins are stored in a package called

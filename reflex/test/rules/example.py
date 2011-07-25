@@ -1,7 +1,7 @@
 ''' Example ruleset
 '''
 
-from reflex.interfaces import Ruleset as BaseRuleset
+from reflex.base import Ruleset as BaseRuleset
 
 class Ruleset(BaseRuleset):
     

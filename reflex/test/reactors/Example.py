@@ -3,7 +3,7 @@
     Part of the ReactorBattery test.
 '''
 
-from reflex.interfaces import Reactor
+from reflex.base import Reactor
 
 class Plugin(Reactor):
     

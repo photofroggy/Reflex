@@ -3,6 +3,15 @@
     This tells you the date of each build, and perhaps some brief details.
     The format for build names is "Build [build number] ([date]-[time(24hr)]) [Build series name]
 
+    Build 11 () Charged
+        * Messing with the Ruleset interface.
+        * Ruleset isn't an "interface". Choose a better name?
+        ** Renamed "interfaces" module to "base" module.
+        ** As it stands, the classes in there are intended as base classes.
+        * Removed `writeout` from the control module.
+        * Updated code and docs to compensate for name changes.
+        * Removed debug messages from tests.
+    
     Build 10 (31052011-075934) Charged
         * Slight bug fix.
         ** reflex.interfaces.Reactor.run makes sure strings are matched properly.

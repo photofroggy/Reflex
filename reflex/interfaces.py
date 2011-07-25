@@ -164,13 +164,17 @@ class Ruleset(object):
             referenced by ``self.mapref``.
         """
         options = options if options else []
+        
         if event in self.mapref.keys():
             for binding in self.mapref[event]:
                 if (binding.source, binding.call, binding.options) is (source, meth, options):
                     return None
-        else: self.mapref[event] = []
+        else:
+            self.mapref[event] = []
+        
         new_binding = Binding(source, meth, event, options, additional)
         self.mapref[event].append(new_binding)
+        
         return new_binding
     
     def unbind(self, source, meth, event, options=None):
@@ -183,15 +187,18 @@ class Ruleset(object):
         """
         rmd = False
         options = options if options else []
+        
         if event in self.mapref.keys():
             for binding in self.mapref[event]:
                 if (binding.source, binding.call, binding.options) == (source, meth, options):
                     del self.mapref[event][self.mapref[event].index(binding)]
                     rmd = True
                     break
+        
         if event in self.mapref.keys():
             if not self.mapref[event]:
                 del self.mapref[event]
+        
         return rmd
     
     def run(self, binding, data, rules, *args):
@@ -213,27 +220,38 @@ class Ruleset(object):
         """
         if len(rules) < len(binding.options):
             return None
+        
         last_item = len(rules)
+        
         for i, option in enumerate(binding.options):
             # Ignore None
             if option is None:
                 continue
+            
             # Process event item i
             rule = rules[i]
+            
+            # Try to match as a string
             try:
                 if str(rule).lower() == str(option).lower():
                     continue
             except Exception:
-                return None
+                pass
+            
+            # Are they the same type?
             if type(rule) != type(option):
                 return None
+            
+            # Do they hold the same value?
             if rule == option:
                 continue
-            print 'hey'
+            
             return None
+        
         try:
             return binding.call(data, *args)
         except Exception as e:
+            # Something failed! Wooo! Should we not capture this?
             log = self._write
             log('Source "{0}" failed to handle event "{1}"!'.format(binding.source, binding.event))
             log('Error:')

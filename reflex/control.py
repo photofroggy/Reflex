@@ -21,10 +21,8 @@ from collections import Callable
 # Reflex imports
 from reflex.data import Event
 from reflex.data import Binding
-from reflex.interfaces import Ruleset
+from reflex.base import Ruleset
 
-def writeout(message=''):
-    sys.stdout.write('{0}\n'.format(message))
 
 class EventManager(object):
     """ The EventManager class provides a simple way to manage
@@ -67,13 +65,13 @@ class EventManager(object):
     
     class info:
         version = 1
-        build = 8
+        build = 11
         stamp = '21042011-172728'
         name = 'Charged'
         state = 'RC'
     
     def __init__(self, stdout=None, stddebug=None, *args, **kwargs):
-        self._write = stdout or writeout
+        self._write = stdout or (lambda n: None)
         self.debug = stddebug or (lambda n: None)
         self._rules = Ruleset
         self.map = {}
@@ -147,7 +145,7 @@ class EventManager(object):
             being used for the event.
             
             If the event has no explicit ruleset, then the default
-            ruleset is used (reflex.interfaces.Ruleset).
+            ruleset is used (reflex.base.Ruleset).
             
             Returns ``None`` on failure. Otherwise, returns the binding
             created. The event binding is an instance of the
@@ -244,7 +242,7 @@ class EventManager(object):
               unbinding events.
             
             This method is only meant for use in
-            ``reflex.interfaces.reactor``. This method returns a tuple
+            ``reflex.base.reactor``. This method returns a tuple
             containing both the ``bind()`` and ``unbind()`` methods,
             except that the methods have been wrapped to always use the
             same ``source`` parameter, as given to this method.
@@ -283,7 +281,7 @@ class PackageBattery(object):
     """
 
     def __init__(self, stdout=None, stddebug=None, *args, **kwargs):
-        self.log = stdout or writeout
+        self.log = stdout or (lambda n: None)
         self.debug = stddebug or (lambda n: None)
         self.modules = {}
         self.loaded = {}

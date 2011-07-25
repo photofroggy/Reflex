@@ -2,51 +2,13 @@
 Reflex
 ========
 
-reflex is an event system for python applications.
+**Reflex** is an event system for applications made using **Python**.
 
-The package, written for Python 3.1, provides a way for applications to manage events and event listeners, with little effort.
+The package provides a way for applications to manage events and event listeners, with little effort.
 
 While the system is somewhat more complex than existing event systems, I feel it is more flexible, and more powerful.
 
-Here is the most basic example::
-
-    from reflex.data import Event
-    from reflex.control import EventManager
-    
-    events = EventManager()
-    
-    def handler(event, *args):
-        print("Hello, world!")
-    
-    events.bind('main application', handler, 'example')
-    
-    events.trigger(Event('example'))
-    # prints "Hello, world!"
-
-The example provided above seems far too complicated for what it does, but the system is intended to be used differently.
-
-Here is a better example::
-
-    from reflex.data import Event
-    from reflex.control import EventManager
-    from reflex.interfaces import reactor
-    
-    class example(reactor):
-        
-        name = 'example'
-        
-        def __inst__(self):
-            self.bind(self.handler, 'basic')
-        
-        def handler(self, event, *args):
-            print("Hello, world!")
-        
-    events = EventManager()
-    obj = example(events)
-    events.trigger(Event('basic'))
-    # Prints "Hello, world!"
-
-Still a bit simple in that it doesn't really show the system's capabilities or benefits. Below is an example that hints at the capabilites::
+Below is an example that hints at the capabilites of Reflex::
 
     from reflex.data import Event
     from reflex.control import EventManager
@@ -76,4 +38,31 @@ Still a bit simple in that it doesn't really show the system's capabilities or b
     # This one is yes.
     events.trigger(Event('args', [('source', 'main')]), 'pickles')
 
-It may seem complicated and not make any sense but documentation shall be available in time.
+Documentation and a package reference can be found at
+http://photofroggy.github.com/Reflex/index.html
+
+The purpose of this package is to make creating an event driven plugin system
+for your application an effortless task. A full plugin system can created in
+just a few lines, as shown here::
+    
+    from reflex.data import Event
+    from reflex.control import EventManager
+    from reflex.control import ReactorBattery
+    import plugins
+    
+    # Create an event manager.
+    events = EventManager()
+    
+    # Create a battery.
+    battery = ReactorBattery()
+    # Load our plugins.
+    battery.load_objects(events, plugins, 'Plugin')
+    
+    # Plugins can now be accessed as such:
+    #   battery.loaded[plugin_name]
+    # Events can be fired as follows:
+    #   events.trigger(Event('my event'))
+    # Easy as pie!
+    
+The above example assumes your plugins are stored in a package called
+``plugins``.
