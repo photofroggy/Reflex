@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. Reactors &mdash; Reflex v1.9 documentation</title>
+    <title>2. Reactors &mdash; Reflex v1.11 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.9',
+        VERSION:     '1.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Reflex v1.9 documentation" href="../../index.html" />
+    <link rel="top" title="Reflex v1.11 documentation" href="../../index.html" />
     <link rel="up" title="Reflex Tutorials" href="index.html" />
     <link rel="next" title="3. Events - A short guide" href="events.html" />
     <link rel="prev" title="1. Basic usage" href="basic.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="basic.html" title="1. Basic usage"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Reflex v1.9 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Reflex v1.11 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Reflex Tutorials</a> &raquo;</li> 
       </ul>
     </div>  
@@ -53,7 +53,7 @@
   <div class="section" id="reactors">
 <h1>2. Reactors<a class="headerlink" href="#reactors" title="Permalink to this headline">¶</a></h1>
 <p>Reactors are objects containing one or more event handler. Reflex provides the
-base class <a class="reference internal" href="../../reference/interfaces.html#i-reactor"><em>reflex.interfaces.Reactor</em></a>, which provides a basic
+base class <a class="reference internal" href="../../reference/base.html#i-reactor"><em>reflex.interfaces.Reactor</em></a>, which provides a basic
 interface for binding, unbinding and triggering events.</p>
 <div class="section" id="creating-reactors">
 <h2>2.1. Creating Reactors<a class="headerlink" href="#creating-reactors" title="Permalink to this headline">¶</a></h2>
@@ -138,7 +138,7 @@ handler to an event.</p>
 <div class="section" id="binding-an-event">
 <h3>2.2.2. Binding An Event<a class="headerlink" href="#binding-an-event" title="Permalink to this headline">¶</a></h3>
 <p>To bind an event on our reactor object, we can use the object&#8217;s own
-<a class="reference internal" href="../../reference/interfaces.html#reflex.interfaces.Reactor.bind" title="reflex.interfaces.Reactor.bind"><tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt></a> method to make sure our handler is
+<tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt> method to make sure our handler is
 called when a certain event occurs.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Event Options</p>
@@ -185,7 +185,7 @@ events.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The Event Manager keeps track of all <a class="reference internal" href="../../reference/data.html#data-binding"><em>event bindings</em></a> and
-the loaded <a class="reference internal" href="../../reference/interfaces.html#i-ruleset"><em>rulesets</em></a>.</p>
+the loaded <a class="reference internal" href="../../reference/base.html#i-ruleset"><em>rulesets</em></a>.</p>
 </div>
 <p>The first thing we need to do, is import our required modules and classes, then
 create an instance of the Event Manager. Create a file <tt class="docutils literal"><span class="pre">main.py</span></tt> and type the
@@ -300,7 +300,7 @@ depending on what resources you provide the application with, of course.</p>
         <li class="right" >
           <a href="basic.html" title="1. Basic usage"
              >previous</a> |</li>
-        <li><a href="../../index.html">Reflex v1.9 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Reflex v1.11 documentation</a> &raquo;</li>
           <li><a href="index.html" >Reflex Tutorials</a> &raquo;</li> 
       </ul>
     </div>

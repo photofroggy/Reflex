@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1. control module &mdash; Reflex v1.9 documentation</title>
+    <title>1. control module &mdash; Reflex v1.11 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.9',
+        VERSION:     '1.11',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Reflex v1.9 documentation" href="../index.html" />
+    <link rel="top" title="Reflex v1.11 documentation" href="../index.html" />
     <link rel="up" title="Package Reference" href="index.html" />
     <link rel="next" title="2. data module" href="data.html" />
     <link rel="prev" title="Package Reference" href="index.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="Package Reference"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.9 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.11 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Package Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -117,7 +117,7 @@ developers may want to use in their systems.</li>
 listener. The binding is actually done in the ruleset object
 being used for the event.</p>
 <p>If the event has no explicit ruleset, then the default
-ruleset is used (reflex.interfaces.Ruleset).</p>
+ruleset is used (reflex.base.Ruleset).</p>
 <p>Returns <tt class="xref docutils literal"><span class="pre">None</span></tt> on failure. Otherwise, returns the binding
 created. The event binding is an instance of the
 <tt class="docutils literal"><span class="pre">refelx.data.Binding</span></tt> class.</p>
@@ -133,7 +133,7 @@ created. The event binding is an instance of the
 unbinding events.</li>
 </ul>
 <p>This method is only meant for use in
-<tt class="docutils literal"><span class="pre">reflex.interfaces.reactor</span></tt>. This method returns a tuple
+<tt class="docutils literal"><span class="pre">reflex.base.reactor</span></tt>. This method returns a tuple
 containing both the <tt class="docutils literal"><span class="pre">bind()</span></tt> and <tt class="docutils literal"><span class="pre">unbind()</span></tt> methods,
 except that the methods have been wrapped to always use the
 same <tt class="docutils literal"><span class="pre">source</span></tt> parameter, as given to this method.</p>
@@ -435,7 +435,7 @@ instantiation.</p>
                         title="previous chapter">Package Reference</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="data.html"
-                        title="next chapter">2. <tt class="docutils literal"><span class="pre">data</span></tt> module</a></p>
+                        title="next chapter">2. <tt class="docutils literal docutils literal"><span class="pre">data</span></tt> module</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/reference/control.txt"
@@ -470,7 +470,7 @@ instantiation.</p>
         <li class="right" >
           <a href="index.html" title="Package Reference"
              >previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.9 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.11 documentation</a> &raquo;</li>
           <li><a href="index.html" >Package Reference</a> &raquo;</li> 
       </ul>
     </div>
