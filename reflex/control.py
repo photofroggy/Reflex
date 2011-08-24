@@ -66,8 +66,8 @@ class EventManager(object):
     
     class info:
         version = 1
-        build = 11
-        stamp = '21042011-172728'
+        build = 12
+        stamp = '24082011-200018'
         name = 'Charged'
         state = 'RC'
     
