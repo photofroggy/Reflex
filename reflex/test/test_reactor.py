@@ -45,6 +45,7 @@ class TestReactor(unittest.TestCase):
         
         self.reactor.reset()
     
+    ''' Deprecated
     def test_ignorant_event(self):
         # Test an ignored condition event
         
@@ -60,6 +61,7 @@ class TestReactor(unittest.TestCase):
         self.assertTrue(self.reactor.handled, 'Ignorant event handler not called')
         
         self.reactor.reset()
+    '''
     
     def test_decorated_event(self):
         # Test a decorated event
