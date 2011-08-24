@@ -1,6 +1,6 @@
 ''' Reactor interface for Reflex events.
-    Created by photofroggy.
-    Released under GNU GPL v3.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     This module provides interfaces for different parts of the event
     system. The one that will be most commonly used by other developers

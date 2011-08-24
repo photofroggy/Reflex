@@ -1,6 +1,6 @@
 ''' Events system for Python.
-    Created by photofroggy.
-    Released under GNU GPL v3.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     The idea of this was to keep things simple but still alow things to be
     quite powerful. Therefore I have introduced the idea of "event rules",

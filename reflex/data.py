@@ -1,6 +1,6 @@
 ''' Reflex data objects.
-    Created by photofroggy.
-    Released under GNU GPL v3.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     This module contains data objects used in Reflex!
     Mainly just the Binding and Event classes!

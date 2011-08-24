@@ -1,4 +1,6 @@
 ''' Test basic events.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     Unit tests for basic reflex events.
 '''

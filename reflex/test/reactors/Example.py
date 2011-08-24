@@ -1,4 +1,6 @@
 ''' Example reactor
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
 
     Part of the ReactorBattery test.
 '''

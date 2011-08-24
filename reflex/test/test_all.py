@@ -1,3 +1,7 @@
+''' Main test suite for reflex.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
+'''
 
 if __name__ == '__main__':
     # Run all test suites if the test package is run as a script!
