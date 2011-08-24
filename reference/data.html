@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>2. data module &mdash; Reflex v1.11 documentation</title>
+    <title>2. data module &mdash; Reflex v1.12 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.11',
+        VERSION:     '1.12',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Reflex v1.11 documentation" href="../index.html" />
+    <link rel="top" title="Reflex v1.12 documentation" href="../index.html" />
     <link rel="up" title="Package Reference" href="index.html" />
     <link rel="next" title="3. base module" href="base.html" />
     <link rel="prev" title="1. control module" href="control.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="control.html" title="1. control module"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.11 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.12 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Package Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -79,7 +79,7 @@ a value each. The object stores these <tt class="docutils literal"><span class="
 <h2>2.2 <tt class="docutils literal"><span class="pre">Binding</span></tt> - Event binding representation.<a class="headerlink" href="#binding-event-binding-representation" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="data-binding"></span><dl class="class">
 <dt id="reflex.data.Binding">
-<em class="property">class </em><tt class="descclassname">reflex.data.</tt><tt class="descname">Binding</tt><big>(</big><em>source</em>, <em>method</em>, <em>event</em>, <em>options</em>, <em>additional</em><big>)</big><a class="headerlink" href="#reflex.data.Binding" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">reflex.data.</tt><tt class="descname">Binding</tt><big>(</big><em>source</em>, <em>method</em>, <em>event</em>, <em>options</em><big>)</big><a class="headerlink" href="#reflex.data.Binding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event binding.</p>
 <p>Each instance represents a different binding. A binding stores
 information showing how a certain method is related to a certain
@@ -92,13 +92,11 @@ the binding came from, or what the method belongs to.</li>
 event.</li>
 <li><em>str</em> <strong>event</strong> - The name of the event that the method
 defined in <tt class="docutils literal"><span class="pre">call</span></tt> is used to handle.</li>
-<li><em>list</em> <strong>optoins</strong> - This list defines a set of items that,
+<li><em>dict</em> <strong>optoins</strong> - This dict defines a set of items that,
 when defined, must match the respective items provided when
 the event defined by <tt class="docutils literal"><span class="pre">event</span></tt> is triggered. If the items do
 not match, then the handler is not used. Different Rulesets
 can modify this behaviour.</li>
-<li><em>list</em> <strong>additional</strong> - Any additional information about the
-binding.</li>
 <li><em>str</em> <strong>type</strong> - A string representation of the binding.</li>
 </ul>
 <p>The constructor of this class takes the above fields as input,
@@ -163,7 +161,7 @@ apart from <tt class="docutils literal"><span class="pre">type</span></tt>.</p>
         <li class="right" >
           <a href="control.html" title="1. control module"
              >previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.11 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.12 documentation</a> &raquo;</li>
           <li><a href="index.html" >Package Reference</a> &raquo;</li> 
       </ul>
     </div>
