@@ -2,6 +2,10 @@
     Welcome to the build list!
     This tells you the date of each build, and perhaps some brief details.
     The format for build names is "Build [build number] ([date]-[time(24hr)]) [Build series name]
+    
+    Build 12 () Charged
+        * Moving to kwargs-based bindings.
+        * Changing license to ISC.
 
     Build 11 (25072011-112356) Charged
         * Messing with the Ruleset interface.
