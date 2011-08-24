@@ -23,6 +23,7 @@ setup(name='Reflex-events',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'License :: OSI Approved :: GNU General Public License (GPL)',
         'Topic :: Software Development :: Libraries :: Application Frameworks'

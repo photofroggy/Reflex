@@ -24,7 +24,7 @@ class TestReactorBattery(unittest.TestCase):
     
     def test_loading_reactors(self):
         # Test loading reactors into a battery.
-        sys.stdout.write('\n')
+        # sys.stdout.write('\n')
         # Add `stddebug=debug` to the constructors here to see debug messages
         # during the tests.
         good_battery = ReactorBattery(lambda n: None)
@@ -47,7 +47,7 @@ class TestRulesetBattery(unittest.TestCase):
     
     def test_loading_rulesets(self):
         # Test loading rulesets into a battery.
-        sys.stdout.write('\n')
+        # sys.stdout.write('\n')
         # Add `stddebug=debug` to the constructors here to see debug messages
         # during the tests.
         good_battery = RulesetBattery(lambda n: None)

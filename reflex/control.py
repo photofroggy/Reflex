@@ -18,6 +18,7 @@ import inspect
 import traceback
 from functools import wraps
 from collections import Callable
+
 # Reflex imports
 from reflex.data import Event
 from reflex.data import Binding
