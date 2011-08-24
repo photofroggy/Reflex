@@ -1,6 +1,6 @@
-''' Events system for Python.
-    Created by photofroggy.
-    Released under GNU GPL v3.
+''' Test suite for Reflex-events.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     This subpackage provides the tests for Reflex!
 '''

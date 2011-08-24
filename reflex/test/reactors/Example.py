@@ -1,4 +1,6 @@
 ''' Example reactor
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
 
     Part of the ReactorBattery test.
 '''
@@ -15,8 +17,7 @@ class Plugin(Reactor):
         
         # Create some event bindings.
         self.bind(self.evt_handler, 'basic')
-        self.bind(self.evt_handler, 'conditional', [1])
-        self.bind(self.evt_handler, 'ignored', [None, 1])
+        self.bind(self.evt_handler, 'conditional', condition=1)
         
         # Create decorated event handler
         @self.handler('decorated')

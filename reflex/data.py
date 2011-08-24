@@ -1,6 +1,6 @@
 ''' Reflex data objects.
-    Created by photofroggy.
-    Released under GNU GPL v3.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     This module contains data objects used in Reflex!
     Mainly just the Binding and Event classes!
@@ -20,13 +20,11 @@ class Binding(object):
           event.
         * *str* **event** - The name of the event that the method
           defined in ``call`` is used to handle.
-        * *list* **optoins** - This list defines a set of items that,
+        * *dict* **optoins** - This dict defines a set of items that,
           when defined, must match the respective items provided when
           the event defined by ``event`` is triggered. If the items do
           not match, then the handler is not used. Different Rulesets
           can modify this behaviour.
-        * *list* **additional** - Any additional information about the
-          binding.
         * *str* **type** - A string representation of the binding.
         
         The constructor of this class takes the above fields as input,
@@ -36,17 +34,15 @@ class Binding(object):
     source = None
     call = None
     event = None
-    options = []
-    additional = []
+    options = {}
     type = None
     
-    def __init__(self, source, method, event, options, additional):
+    def __init__(self, source, method, event, options):
         """All the given values are stored on instantiation of an event binding."""
         self.source = source
         self.call = method
         self.event = event
         self.options = options
-        self.additional = additional
         self.type = '<event[\''+event+'\'].binding>'
         self.__inst__()
         

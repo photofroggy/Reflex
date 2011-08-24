@@ -1,4 +1,6 @@
 ''' Test basic events.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     Unit tests for basic reflex events.
 '''
@@ -37,7 +39,7 @@ class TestBasicEvents(unittest.TestCase):
         def handler(event):
             self.handled = True
         
-        binding = mgr.bind('mgr_test', handler, 'basic', [1])
+        binding = mgr.bind('mgr_test', handler, 'basic', condition=1)
         self.assertEqual(binding.__class__, Binding,
             'EventManager().bind() returned something other than an instance of Binding')
         
@@ -49,30 +51,6 @@ class TestBasicEvents(unittest.TestCase):
         
         mgr.trigger(Event('basic', [('condition', 1)]))
         self.assertTrue(self.handled, 'Conditional event handler not called')
-    
-    def test_ignore_condition(self):
-        mgr = EventManager()
-        
-        self.handled = False
-        
-        def handler(event):
-            self.handled = True
-        
-        binding = mgr.bind('mgr_test', handler, 'basic', [None, 1])
-        self.assertEqual(binding.__class__, Binding,
-            'EventManager().bind() returned something other than an instance of Binding')
-        
-        mgr.trigger(Event('basic'))
-        self.assertFalse(self.handled, 'Ignorant event handler called for the wrong event')
-        
-        mgr.trigger(Event('basic', [('ignore', 1)]))
-        self.assertFalse(self.handled, 'Ignorant event handler called for the wrong event')
-        
-        mgr.trigger(Event('basic', [('ignore', 1), ('condition', 0)]))
-        self.assertFalse(self.handled, 'Ignorant event handler called for the wrong event')
-        
-        mgr.trigger(Event('basic', [('ignore', 1), ('condition', 1)]))
-        self.assertTrue(self.handled, 'Ignorant event handler not called')
     
     def test_basic_decorator_event(self):
         mgr = EventManager()

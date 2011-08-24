@@ -1,5 +1,6 @@
 ''' System unittest
-    Created by photofroggy.
+    Copyright (c) 2011, Henry "photofroggy" Rapley.
+    Released under the ISC License.
     
     This tests whether the battery system works together as a whole
     or not.
