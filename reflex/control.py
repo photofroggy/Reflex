@@ -121,7 +121,7 @@ class EventManager(object):
         self.rules[event] = ruleset(args, self.map, self._write, self.debug)
         return True
     
-    def bind(self, source, method, event, options=None, *additional):
+    def bind(self, source, method, event, **options):
         """ Bind a method to an event.
             
             Input parameters:
@@ -155,9 +155,9 @@ class EventManager(object):
         if not isinstance(method, Callable):
             return None
         ruleset = self.rules.get(event, self.rules['default'])
-        return ruleset.bind(source, method, event, options, *additional)
+        return ruleset.bind(source, method, event, **options)
     
-    def unbind(self, source, method, event, options=None):
+    def unbind(self, source, method, event, **options):
         """ Remove an event binding for a method.
             
             This is the reverse of the bind method. Once again, the
@@ -165,9 +165,9 @@ class EventManager(object):
             for the event.
         """
         ruleset = self.rules.get(event, self.rules['default'])
-        return ruleset.unbind(source, method, event, options)
+        return ruleset.unbind(source, method, event, **options)
     
-    def handler(self, event, options=None, *additional):
+    def handler(self, event, **options):
         """ Create an event handler.
             
             This method provides a decorator interface for the ``bind()``
@@ -195,7 +195,7 @@ class EventManager(object):
         def decorate(func):
             if not isinstance(func, Callable):
                 return func
-            func.binding = self.bind(func.__name__, func, event, options, *additional)
+            func.binding = self.bind(func.__name__, func, event, **options)
             return func
         return decorate
     
@@ -217,14 +217,16 @@ class EventManager(object):
         if not hasattr(data, 'name') or not hasattr(data, 'rules'):
             return []
         event = data.name
-        rules = data.rules
-        del data.rules
+        
         if not event in self.map.keys():
             return []
+        
         ruleset = self.rules.get(event, self.rules['default'])
+        
         if hasattr(ruleset, 'trigger'):
-            return ruleset.trigger(data, rules, *args)
-        return [ruleset.run(binding, data, rules, *args) for binding in self.map[event]]
+            return ruleset.trigger(data, *args)
+        
+        return [ruleset.run(binding, data, *args) for binding in self.map[event]]
     
     def clear_bindings(self):
         """ This method removes all event bindings that are being stored

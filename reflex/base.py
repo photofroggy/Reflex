@@ -71,23 +71,23 @@ class Reactor(object):
         """
         pass
         
-    def bind(self, method, event, options=None, *additional):
+    def bind(self, method, event, **options):
         """ This is a wrapper for :py:meth:`reflex.control.EventManager.bind`.
             The ``name`` attribute of this object is used as the binding
             ``source``.
         """
-        return self._bind(self.name, method, event, options, *additional)
+        return self._bind(self.name, method, event, **options)
     
-    def unbind(self, method, event, options=None):
+    def unbind(self, method, event, **options):
         """ Another wrapper like ``bind``. """
-        return self._unbind(self.name, method, event, options)
+        return self._unbind(self.name, method, event, **options)
         
-    def handler(self, event, options=None, *additional):
+    def handler(self, event, **options):
         """ Can be used as a decorator to bind events. """
         def decorate(func):
             if not isinstance(func, Callable):
                 return func
-            func.binding = self.bind(func, event, options, *additional)
+            func.binding = self.bind(func, event, **options)
             return func
         return decorate
 
@@ -150,7 +150,7 @@ class Ruleset(object):
         """
         self.mapref = mapref
 
-    def bind(self, source, meth, event, options=None, *additional):
+    def bind(self, source, meth, event, **options):
         """ Create an event binding.
             
             This is the method called by the :ref:`event manager
@@ -163,21 +163,20 @@ class Ruleset(object):
             class is returned. The instance is also added to the object
             referenced by ``self.mapref``.
         """
-        options = options if options else []
         
         if event in self.mapref.keys():
             for binding in self.mapref[event]:
-                if (binding.source, binding.call, binding.options) is (source, meth, options):
+                if (binding.source, binding.call, binding.options) == (source, meth, options):
                     return None
         else:
             self.mapref[event] = []
         
-        new_binding = Binding(source, meth, event, options, additional)
+        new_binding = Binding(source, meth, event, options)
         self.mapref[event].append(new_binding)
         
         return new_binding
     
-    def unbind(self, source, meth, event, options=None):
+    def unbind(self, source, meth, event, **options):
         """ Remove an event binding.
             
             Similar to the ``bind()`` method of this class, except the
@@ -201,7 +200,7 @@ class Ruleset(object):
         
         return rmd
     
-    def run(self, binding, data, rules, *args):
+    def run(self, binding, data, *args):
         """ Run a given event binding.
             
             Input parameters:
@@ -218,32 +217,28 @@ class Ruleset(object):
             * *args* - Additional arguments given to the :ref:`event
               manager's <eventmanager>` ``trigger()`` method.
         """
-        if len(rules) < len(binding.options):
-            return None
         
-        last_item = len(rules)
-        
-        for i, option in enumerate(binding.options):
-            # Ignore None
-            if option is None:
-                continue
+        for key, option in binding.options.iteritems():
+            # Does the event provide this option?
+            if not hasattr(data, key):
+                return None
             
-            # Process event item i
-            rule = rules[i]
+            # Process event item
+            item = getattr(data, key)
             
             # Try to match as a string
             try:
-                if str(rule).lower() == str(option).lower():
+                if str(item).lower() == str(option).lower():
                     continue
             except Exception:
                 pass
             
             # Are they the same type?
-            if type(rule) != type(option):
+            if type(item) != type(option):
                 return None
             
             # Do they hold the same value?
-            if rule == option:
+            if item == option:
                 continue
             
             return None
