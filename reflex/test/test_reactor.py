@@ -45,22 +45,6 @@ class TestReactor(unittest.TestCase):
         
         self.reactor.reset()
     
-    def test_ignorant_event(self):
-        # Test an ignored condition event
-        
-        # Should be false.
-        self.events.trigger(Event('ignored',
-            [('ignore', 1), ('condition', 0)]))
-        self.assertFalse(self.reactor.handled,
-            'Ignorant event handler called for the wrong event')
-        
-        # Shoud be true
-        self.events.trigger(Event('ignored',
-            [('ignore', 1), ('condition', 1)]))
-        self.assertTrue(self.reactor.handled, 'Ignorant event handler not called')
-        
-        self.reactor.reset()
-    
     def test_decorated_event(self):
         # Test a decorated event
         
