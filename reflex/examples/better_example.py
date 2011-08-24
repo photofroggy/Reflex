@@ -8,7 +8,7 @@ class example(Reactor):
     name = 'example'
     
     def init(self):
-        self.bind(self.handler, 'basic', ['main'])
+        self.bind(self.handler, 'basic', source='main')
         self.bind(self.use_args, 'args')
     
     def handler(self, event, *args):

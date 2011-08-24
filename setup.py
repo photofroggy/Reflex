@@ -46,7 +46,7 @@ Below is an example that hints at the capabilites of Reflex::
         name = 'example'
         
         def __inst__(self):
-            self.bind(self.handler, 'basic', ['main'])
+            self.bind(self.handler, 'basic', source='main')
             self.bind(self.use_args, 'args')
         
         def handler(self, event, *args):
