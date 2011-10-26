@@ -7,7 +7,7 @@ events = EventManager()
 def handler(event, *args):
     print("Hello, world!")
 
-events.bind('main application', handler, 'example')
+events.bind(handler, 'example')
 
 events.trigger(Event('example'))
 # prints "Hello, world!"

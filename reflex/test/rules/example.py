@@ -13,13 +13,13 @@ class Ruleset(BaseRuleset):
     def reset_called(self):
         self.called = False
     
-    def bind(self, source, meth, event, **options):
+    def bind(self, meth, event, **options):
         self.called = True
-        return super(Ruleset, self).bind(source, meth, event, **options)
+        return super(Ruleset, self).bind(meth, event, **options)
     
-    def unbind(self, source, meth, event, **options):
+    def unbind(self, meth, event, **options):
         self.called = True
-        return super(Ruleset, self).bind(source, meth, event, **options)
+        return super(Ruleset, self).bind(meth, event, **options)
     
     def run(self, binding, data, *args):
         self.called = True

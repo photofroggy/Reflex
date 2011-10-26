@@ -3,6 +3,11 @@
     This tells you the date of each build, and perhaps some brief details.
     The format for build names is "Build [build number] ([date]-[time(24hr)]) [Build series name]
     
+    Build 13 () Charged
+        * Removing the `source` parameter when binding events.
+        ** Updated unit tests.
+        ** Updated examples.
+    
     Build 12 (24082011-200018) Charged
         * Moving to kwargs-based bindings.
         ** Updated unit tests.

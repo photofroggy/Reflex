@@ -43,7 +43,7 @@ class EventManager(object):
             def example(event, *args):
                 print('Hello, world')
             
-            events.bind('main app', example, 'test')
+            events.bind(example, 'test')
             
             events.trigger(Event('test'))
         
@@ -121,15 +121,11 @@ class EventManager(object):
         self.rules[event] = ruleset(args, self.map, self._write, self.debug)
         return True
     
-    def bind(self, source, method, event, **options):
+    def bind(self, method, event, **options):
         """ Bind a method to an event.
             
             Input parameters:
             
-            * *str* **source** - The origin of the method given to
-              handle the event. This should be a name describing where
-              the method may have come from, so different things may be
-              appropriate in different applications.
             * *callable* **method** - This is a method that will be
               invoked when the event defined in the event parameter is
               triggered.
@@ -155,9 +151,9 @@ class EventManager(object):
         if not isinstance(method, Callable):
             return None
         ruleset = self.rules.get(event, self.rules['default'])
-        return ruleset.bind(source, method, event, **options)
+        return ruleset.bind(method, event, **options)
     
-    def unbind(self, source, method, event, **options):
+    def unbind(self, method, event, **options):
         """ Remove an event binding for a method.
             
             This is the reverse of the bind method. Once again, the
@@ -165,17 +161,13 @@ class EventManager(object):
             for the event.
         """
         ruleset = self.rules.get(event, self.rules['default'])
-        return ruleset.unbind(source, method, event, **options)
+        return ruleset.unbind(method, event, **options)
     
     def handler(self, event, **options):
         """ Create an event handler.
             
             This method provides a decorator interface for the ``bind()``
-            method.
-            
-            The ``source`` parameter for the ``bind()`` method is given
-            the name of the callable, using ``callable.__name__``. A
-            brief example is given below::
+            method. A brief example is given below::
             
                 from reflex.data import Event
                 from reflex.control import EventManager
@@ -195,7 +187,7 @@ class EventManager(object):
         def decorate(func):
             if not isinstance(func, Callable):
                 return func
-            func.binding = self.bind(func.__name__, func, event, **options)
+            func.binding = self.bind(func, event, **options)
             return func
         return decorate
     

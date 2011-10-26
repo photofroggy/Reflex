@@ -14,8 +14,6 @@ class Binding(object):
         event. Different attributes define the conditions for the
         relationship. The attributes are as follows:
         
-        * *str* **source** - The source defines a name describing where
-          the binding came from, or what the method belongs to.
         * *callable* **call** - The method used to handle the specified
           event.
         * *str* **event** - The name of the event that the method
@@ -31,15 +29,13 @@ class Binding(object):
         apart from ``type``.
     """
     
-    source = None
     call = None
     event = None
     options = {}
     type = None
     
-    def __init__(self, source, method, event, options):
+    def __init__(self, method, event, options):
         """All the given values are stored on instantiation of an event binding."""
-        self.source = source
         self.call = method
         self.event = event
         self.options = options

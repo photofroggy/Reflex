@@ -21,7 +21,7 @@ class TestBasicEvents(unittest.TestCase):
         def handler(event):
             self.handled = True
         
-        binding = mgr.bind('mgr_test', handler, 'basic')
+        binding = mgr.bind(handler, 'basic')
         self.assertEqual(binding.__class__, Binding,
             'EventManager().bind() returned something other than an instance of Binding')
         
@@ -39,7 +39,7 @@ class TestBasicEvents(unittest.TestCase):
         def handler(event):
             self.handled = True
         
-        binding = mgr.bind('mgr_test', handler, 'basic', condition=1)
+        binding = mgr.bind(handler, 'basic', condition=1)
         self.assertEqual(binding.__class__, Binding,
             'EventManager().bind() returned something other than an instance of Binding')
         

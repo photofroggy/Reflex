@@ -73,14 +73,12 @@ class Reactor(object):
         
     def bind(self, method, event, **options):
         """ This is a wrapper for :py:meth:`reflex.control.EventManager.bind`.
-            The ``name`` attribute of this object is used as the binding
-            ``source``.
         """
-        return self._bind(self.name, method, event, **options)
+        return self._bind(method, event, **options)
     
     def unbind(self, method, event, **options):
         """ Another wrapper like ``bind``. """
-        return self._unbind(self.name, method, event, **options)
+        return self._unbind(method, event, **options)
         
     def handler(self, event, **options):
         """ Can be used as a decorator to bind events. """
@@ -150,7 +148,7 @@ class Ruleset(object):
         """
         self.mapref = mapref
 
-    def bind(self, source, meth, event, **options):
+    def bind(self, meth, event, **options):
         """ Create an event binding.
             
             This is the method called by the :ref:`event manager
@@ -166,17 +164,17 @@ class Ruleset(object):
         
         if event in self.mapref.keys():
             for binding in self.mapref[event]:
-                if (binding.source, binding.call, binding.options) == (source, meth, options):
+                if (binding.call, binding.options) == (meth, options):
                     return None
         else:
             self.mapref[event] = []
         
-        new_binding = Binding(source, meth, event, options)
+        new_binding = Binding(meth, event, options)
         self.mapref[event].append(new_binding)
         
         return new_binding
     
-    def unbind(self, source, meth, event, **options):
+    def unbind(self, meth, event, **options):
         """ Remove an event binding.
             
             Similar to the ``bind()`` method of this class, except the
@@ -189,7 +187,7 @@ class Ruleset(object):
         
         if event in self.mapref.keys():
             for binding in self.mapref[event]:
-                if (binding.source, binding.call, binding.options) == (source, meth, options):
+                if (binding.call, binding.options) == (meth, options):
                     del self.mapref[event][self.mapref[event].index(binding)]
                     rmd = True
                     break
