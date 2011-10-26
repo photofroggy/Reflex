@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>3. base module &mdash; Reflex v1.12 documentation</title>
+    <title>3. base module &mdash; Reflex v1.13 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.12',
+        VERSION:     '1.13',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Reflex v1.12 documentation" href="../index.html" />
+    <link rel="top" title="Reflex v1.13 documentation" href="../index.html" />
     <link rel="up" title="Package Reference" href="index.html" />
     <link rel="next" title="Help Files" href="../help/index.html" />
     <link rel="prev" title="2. data module" href="data.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="data.html" title="2. data module"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.12 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.13 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Package Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -78,7 +78,7 @@ type of event only.</p>
 a specific ruleset assigned to them.</p>
 <dl class="method">
 <dt id="reflex.base.Ruleset.bind">
-<tt class="descname">bind</tt><big>(</big><em>source</em>, <em>meth</em>, <em>event</em>, <em>**options</em><big>)</big><a class="headerlink" href="#reflex.base.Ruleset.bind" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">bind</tt><big>(</big><em>meth</em>, <em>event</em>, <em>**options</em><big>)</big><a class="headerlink" href="#reflex.base.Ruleset.bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an event binding.</p>
 <p>This is the method called by the <a class="reference internal" href="control.html#eventmanager"><em>event manager</em></a> object&#8217;s own <tt class="docutils literal"><span class="pre">bind()</span></tt> method. It ensures
 that there are no clashes between the given binding details
@@ -135,7 +135,7 @@ the event bindings being stored in the event system.</li>
 
 <dl class="method">
 <dt id="reflex.base.Ruleset.unbind">
-<tt class="descname">unbind</tt><big>(</big><em>source</em>, <em>meth</em>, <em>event</em>, <em>**options</em><big>)</big><a class="headerlink" href="#reflex.base.Ruleset.unbind" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">unbind</tt><big>(</big><em>meth</em>, <em>event</em>, <em>**options</em><big>)</big><a class="headerlink" href="#reflex.base.Ruleset.unbind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove an event binding.</p>
 <p>Similar to the <tt class="docutils literal"><span class="pre">bind()</span></tt> method of this class, except the
 binding is removed rather than added. This method <tt class="xref docutils literal"><span class="pre">True</span></tt>
@@ -181,9 +181,7 @@ to the tutorials.</p>
 <dl class="method">
 <dt id="reflex.base.Reactor.bind">
 <tt class="descname">bind</tt><big>(</big><em>method</em>, <em>event</em>, <em>**options</em><big>)</big><a class="headerlink" href="#reflex.base.Reactor.bind" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a wrapper for <a class="reference internal" href="control.html#reflex.control.EventManager.bind" title="reflex.control.EventManager.bind"><tt class="xref py py-meth docutils literal"><span class="pre">reflex.control.EventManager.bind()</span></tt></a>.
-The <tt class="docutils literal"><span class="pre">name</span></tt> attribute of this object is used as the binding
-<tt class="docutils literal"><span class="pre">source</span></tt>.</p>
+<dd><p>This is a wrapper for <a class="reference internal" href="control.html#reflex.control.EventManager.bind" title="reflex.control.EventManager.bind"><tt class="xref py py-meth docutils literal"><span class="pre">reflex.control.EventManager.bind()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -266,7 +264,7 @@ method and use it to create <em>event bindings</em>.</p>
         <li class="right" >
           <a href="data.html" title="2. data module"
              >previous</a> |</li>
-        <li><a href="../index.html">Reflex v1.12 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Reflex v1.13 documentation</a> &raquo;</li>
           <li><a href="index.html" >Package Reference</a> &raquo;</li> 
       </ul>
     </div>
