@@ -40,9 +40,9 @@ class Binding(object):
         self.event = event
         self.options = options
         self.type = '<event[\''+event+'\'].binding>'
-        self.__inst__()
+        self.init()
         
-    def __inst__(self):
+    def init(self):
         """Overwrite this method when doing stuff on instantiation."""
         pass
 
@@ -72,9 +72,9 @@ class Event(object):
                 continue
             setattr(self, key, value)
             self.rules.append(value)
-        self.__inst__(event, data)
+        self.init(event, data)
     
-    def __inst__(self, event, data):
+    def init(self, event, data):
         """Overwrite this method if you need to do stuff on instatiation. Do not overwrite __init__."""
         pass
     
