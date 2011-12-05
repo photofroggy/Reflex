@@ -5,9 +5,7 @@ import copy
 import traceback
 from functools import wraps
 
-from reflex.data import Event
-from reflex.data import Binding
-from reflex.base import Ruleset
+from reflex import base
 
 class ExistingSubcommand(Exception):
     pass
@@ -18,7 +16,7 @@ class SubcommandNotFound(Exception):
 class InvalidCommand(Exception):
     pass
 
-class CommandRuleset(Ruleset):
+class Ruleset(base.Ruleset):
     
     def init(self):
         self.index = {}
@@ -187,6 +185,7 @@ class CommandRuleset(Ruleset):
     
     def privd(self, user, level, cmd):
         return True
+
 
 # EOF
 
