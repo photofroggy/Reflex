@@ -2,6 +2,10 @@
     Welcome to the build list!
     This tells you the date of each build, and perhaps some brief details.
     The format for build names is "Build [build number] ([date]-[time(24hr)]) [Build series name]
+
+    Build 14 () Charged
+        * Changed data classes to use `init` instead of `__inst__` methods.
+        ** Semantic change. Nothing too important.
     
     Build 13 (26102011-051356) Charged
         * Removing the `source` parameter when binding events.
