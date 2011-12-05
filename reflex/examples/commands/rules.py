@@ -1,20 +1,11 @@
 ''' Command rules.
 '''
 
-import copy
 import traceback
-from functools import wraps
 
 from reflex import base
 
-class ExistingSubcommand(Exception):
-    pass
-
-class SubcommandNotFound(Exception):
-    pass
-
-class InvalidCommand(Exception):
-    pass
+from reflex.examples.commands import data
 
 class Ruleset(base.Ruleset):
     
@@ -54,8 +45,7 @@ class Ruleset(base.Ruleset):
             self.debug('>> Command \'{0}\' already exists'.format(cmd))
             return None
         
-        binding = CommandBinding(meth, options)
-        self.index_binding(binding, options['cmd'])
+        binding = data.Binding(meth, options)
         # binding.set_privs(self.user.groups)
         self.mapref['command'].append(binding)
         self.index[cmd.lower()] = len(self.mapref['command']) - 1
@@ -125,7 +115,7 @@ class Ruleset(base.Ruleset):
             if not value:
                 continue
             
-            if key == 'cmd' and value.lower() == last:
+            if key == 'cmd' and value.lower() == cmd:
                 continue
             
             if key == 'priv':

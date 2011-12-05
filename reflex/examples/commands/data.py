@@ -2,6 +2,9 @@
     Provides a binding object and an event object.
 '''
 
+
+from functools import wraps
+
 from reflex import data
 
 
@@ -9,7 +12,7 @@ class Binding(data.Binding):
     """Command Binding class."""
     
     def __init__(self, method, options, sub=False):
-        super(CommandBinding, self).__init__(method, 'command', options)
+        super(Binding, self).__init__(method, 'command', options)
         self.subs = {}
         self.sub = sub
         
