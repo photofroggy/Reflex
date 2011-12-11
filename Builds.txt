@@ -3,7 +3,7 @@
     This tells you the date of each build, and perhaps some brief details.
     The format for build names is "Build [build number] ([date]-[time(24hr)]) [Build series name]
 
-    Build 14 () Charged
+    Build 14 (11122011-032054) Charged
         * Changed data classes to use `init` instead of `__inst__` methods.
         ** Semantic change. Nothing too important.
     
