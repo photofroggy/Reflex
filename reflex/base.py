@@ -216,7 +216,7 @@ class Ruleset(object):
               manager's <eventmanager>` ``trigger()`` method.
         """
         
-        for key, option in binding.options.iteritems():
+        for key, option in binding.options.items():
             # Does the event provide this option?
             if not hasattr(data, key):
                 return None
